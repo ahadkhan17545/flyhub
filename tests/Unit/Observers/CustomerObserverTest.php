@@ -6,7 +6,7 @@ use Illuminate\Foundation\Testing\DatabaseTransactions;
 
 uses(Tests\TestCase::class, DatabaseTransactions::class);
 
-test('creating_sets_birthdate_to_null_when_empty', function () {
+test('creating sets birthdate to null when empty', function () {
     $customerData = Customer::factory()->make()->toArray();
     $customerData['birthdate'] = '';
 
@@ -18,7 +18,7 @@ test('creating_sets_birthdate_to_null_when_empty', function () {
     $this->assertNull($customer->birthdate);
 });
 
-test('creating_preserves_birthdate_when_not_empty', function () {
+test('creating preserves birthdate when not empty', function () {
     $customerData = Customer::factory()->make()->toArray();
     $customerData['birthdate'] = '1990-01-01';
 
@@ -30,7 +30,7 @@ test('creating_preserves_birthdate_when_not_empty', function () {
     $this->assertEquals('1990-01-01', $customer->birthdate);
 });
 
-test('creating_sets_birthdate_to_null_when_null', function () {
+test('creating sets birthdate to null when null', function () {
     $customerData = Customer::factory()->make()->toArray();
     $customerData['birthdate'] = null;
 
@@ -42,7 +42,7 @@ test('creating_sets_birthdate_to_null_when_null', function () {
     $this->assertNull($customer->birthdate);
 });
 
-test('updating_sets_birthdate_to_null_when_empty', function () {
+test('updating sets birthdate to null when empty', function () {
     $customer = Customer::factory()->create([
         'birthdate' => '1990-01-01'
     ]);
@@ -55,7 +55,7 @@ test('updating_sets_birthdate_to_null_when_empty', function () {
     $this->assertNull($customer->birthdate);
 });
 
-test('updating_preserves_birthdate_when_not_empty', function () {
+test('updating preserves birthdate when not empty', function () {
     $customer = Customer::factory()->create([
         'birthdate' => '1990-01-01'
     ]);
@@ -68,7 +68,7 @@ test('updating_preserves_birthdate_when_not_empty', function () {
     $this->assertEquals('1995-05-15', $customer->birthdate);
 });
 
-test('updating_sets_birthdate_to_null_when_null', function () {
+test('updating sets birthdate to null when null', function () {
     $customer = Customer::factory()->create([
         'birthdate' => '1990-01-01'
     ]);

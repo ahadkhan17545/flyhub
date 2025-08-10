@@ -2,7 +2,6 @@
 
 namespace Tests\Unit\Integration\Mapping;
 
-use App\Integration\Mapping\ResourceMapper;
 use Tests\TestCase;
 use stdClass;
 

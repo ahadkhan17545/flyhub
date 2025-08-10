@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Queue;
 
 uses(Tests\TestCase::class, DatabaseTransactions::class);
 
-test('created_dispatches_job_when_status_is_processing', function () {
+test('created dispatches job when status is processing', function () {
     Queue::fake();
 
     $order = Order::factory()->create([
@@ -23,7 +23,7 @@ test('created_dispatches_job_when_status_is_processing', function () {
     });
 });
 
-test('created_dispatches_job_when_status_is_em_separacao', function () {
+test('created dispatches job when status is em separacao', function () {
     Queue::fake();
 
     $order = Order::factory()->create([
@@ -36,7 +36,7 @@ test('created_dispatches_job_when_status_is_em_separacao', function () {
     Queue::assertPushed(ChannelSendResourceJob::class);
 });
 
-test('created_dispatches_job_when_status_is_em_andamento', function () {
+test('created dispatches job when status is em andamento', function () {
     Queue::fake();
 
     $order = Order::factory()->create([
@@ -49,7 +49,7 @@ test('created_dispatches_job_when_status_is_em_andamento', function () {
     Queue::assertPushed(ChannelSendResourceJob::class);
 });
 
-test('created_dispatches_job_when_status_is_em_aberto', function () {
+test('created dispatches job when status is em aberto', function () {
     Queue::fake();
 
     $order = Order::factory()->create([
@@ -62,7 +62,7 @@ test('created_dispatches_job_when_status_is_em_aberto', function () {
     Queue::assertPushed(ChannelSendResourceJob::class);
 });
 
-test('created_does_not_dispatch_job_when_status_is_not_appropriate', function () {
+test('created does not dispatch job when status is not appropriate', function () {
     Queue::fake();
 
     $order = Order::factory()->create([
@@ -75,7 +75,7 @@ test('created_does_not_dispatch_job_when_status_is_not_appropriate', function ()
     Queue::assertNotPushed(ChannelSendResourceJob::class);
 });
 
-test('updated_dispatches_job_when_status_changes_to_processing', function () {
+test('updated dispatches job when status changes to processing', function () {
     Queue::fake();
 
     $order = Order::factory()->create([
@@ -91,7 +91,7 @@ test('updated_dispatches_job_when_status_changes_to_processing', function () {
     Queue::assertPushed(ChannelSendResourceJob::class);
 });
 
-test('updated_dispatches_job_when_status_changes_to_em_separacao', function () {
+test('updated dispatches job when status changes to em separacao', function () {
     Queue::fake();
 
     $order = Order::factory()->create([
@@ -107,7 +107,7 @@ test('updated_dispatches_job_when_status_changes_to_em_separacao', function () {
     Queue::assertPushed(ChannelSendResourceJob::class);
 });
 
-test('updated_does_not_dispatch_job_when_status_does_not_change', function () {
+test('updated does not dispatch job when status does not change', function () {
     Queue::fake();
 
     $order = Order::factory()->create([
@@ -123,7 +123,7 @@ test('updated_does_not_dispatch_job_when_status_does_not_change', function () {
     Queue::assertNotPushed(ChannelSendResourceJob::class);
 });
 
-test('updated_does_not_dispatch_job_when_status_changes_to_inappropriate_value', function () {
+test('updated does not dispatch job when status changes to inappropriate value', function () {
     Queue::fake();
 
     $order = Order::factory()->create([
@@ -139,7 +139,7 @@ test('updated_does_not_dispatch_job_when_status_changes_to_inappropriate_value',
     Queue::assertNotPushed(ChannelSendResourceJob::class);
 });
 
-test('updated_does_not_dispatch_job_when_other_fields_change', function () {
+test('updated does not dispatch job when other fields change', function () {
     Queue::fake();
 
     $order = Order::factory()->create([

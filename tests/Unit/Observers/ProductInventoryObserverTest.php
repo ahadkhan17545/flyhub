@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Queue;
 
 uses(Tests\TestCase::class, DatabaseTransactions::class);
 
-test('created_dispatches_job_when_product_price_greater_than_zero', function () {
+test('created dispatches job when product price greater than zero', function () {
     Queue::fake();
 
     $product = Product::factory()->create([
@@ -28,7 +28,7 @@ test('created_dispatches_job_when_product_price_greater_than_zero', function () 
     });
 });
 
-test('created_dispatches_job_when_product_price_is_decimal', function () {
+test('created dispatches job when product price is decimal', function () {
     Queue::fake();
 
     $product = Product::factory()->create([
@@ -45,7 +45,7 @@ test('created_dispatches_job_when_product_price_is_decimal', function () {
     Queue::assertPushed(ChannelSendResourceJob::class);
 });
 
-test('created_does_not_dispatch_job_when_product_price_is_zero', function () {
+test('created does not dispatch job when product price is zero', function () {
     Queue::fake();
 
     $product = Product::factory()->create([
@@ -62,7 +62,7 @@ test('created_does_not_dispatch_job_when_product_price_is_zero', function () {
     Queue::assertNotPushed(ChannelSendResourceJob::class);
 });
 
-test('created_does_not_dispatch_job_when_product_price_is_negative', function () {
+test('created does not dispatch job when product price is negative', function () {
     Queue::fake();
 
     $product = Product::factory()->create([
@@ -79,7 +79,7 @@ test('created_does_not_dispatch_job_when_product_price_is_negative', function ()
     Queue::assertNotPushed(ChannelSendResourceJob::class);
 });
 
-test('created_does_not_dispatch_job_when_product_price_is_null', function () {
+test('created does not dispatch job when product price is null', function () {
     Queue::fake();
 
     $product = Product::factory()->create([
@@ -96,7 +96,7 @@ test('created_does_not_dispatch_job_when_product_price_is_null', function () {
     Queue::assertNotPushed(ChannelSendResourceJob::class);
 });
 
-test('created_dispatches_job_with_correct_product_relationship', function () {
+test('created dispatches job with correct product relationship', function () {
     Queue::fake();
 
     $product = Product::factory()->create([

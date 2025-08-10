@@ -7,7 +7,7 @@ use Stancl\Tenancy\Contracts\TenantWithDatabase;
 
 uses(Tests\TestCase::class, DatabaseTransactions::class);
 
-test('handle_creates_dns_record_via_cloudflare_api', function () {
+test('handles creates dns record via cloudflare api', function () {
     Http::fake([
         'https://api.cloudflare.com/client/v4/zones/*/dns_records' => Http::response([
             'success' => true,
@@ -40,7 +40,7 @@ test('handle_creates_dns_record_via_cloudflare_api', function () {
     });
 });
 
-test('handle_uses_correct_tenant_key_in_dns_record', function () {
+test('handles uses correct tenant key in dns record', function () {
     Http::fake([
         'https://api.cloudflare.com/client/v4/zones/*/dns_records' => Http::response([
             'success' => true
@@ -58,7 +58,7 @@ test('handle_uses_correct_tenant_key_in_dns_record', function () {
     });
 });
 
-test('handle_uses_cloudflare_token_from_env', function () {
+test('handles uses cloudflare token from env', function () {
     Http::fake([
         'https://api.cloudflare.com/client/v4/zones/*/dns_records' => Http::response([
             'success' => true
@@ -76,7 +76,7 @@ test('handle_uses_cloudflare_token_from_env', function () {
     });
 });
 
-test('handle_uses_zone_id_from_env', function () {
+test('handles uses zone id from env', function () {
     Http::fake([
         'https://api.cloudflare.com/client/v4/zones/*/dns_records' => Http::response([
             'success' => true
@@ -94,7 +94,7 @@ test('handle_uses_zone_id_from_env', function () {
     });
 });
 
-test('handle_sets_correct_dns_record_parameters', function () {
+test('handles sets correct dns record parameters', function () {
     Http::fake([
         'https://api.cloudflare.com/client/v4/zones/*/dns_records' => Http::response([
             'success' => true

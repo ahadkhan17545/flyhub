@@ -6,7 +6,7 @@ use Illuminate\Foundation\Testing\DatabaseTransactions;
 
 uses(Tests\TestCase::class, DatabaseTransactions::class);
 
-test('creating_calculates_total_correctly', function () {
+test('creating calculates total correctly', function () {
     $orderItemData = OrderItem::factory()->make()->toArray();
     $orderItemData['price'] = 100.00;
     $orderItemData['qty_ordered'] = 2;
@@ -22,7 +22,7 @@ test('creating_calculates_total_correctly', function () {
     $this->assertEquals($expectedTotal, $orderItem->total);
 });
 
-test('creating_calculates_total_with_zero_discount', function () {
+test('creating calculates total with zero discount', function () {
     $orderItemData = OrderItem::factory()->make()->toArray();
     $orderItemData['price'] = 50.00;
     $orderItemData['qty_ordered'] = 3;
@@ -38,7 +38,7 @@ test('creating_calculates_total_with_zero_discount', function () {
     $this->assertEquals($expectedTotal, $orderItem->total);
 });
 
-test('creating_calculates_total_with_zero_quantity', function () {
+test('creating calculates total with zero quantity', function () {
     $orderItemData = OrderItem::factory()->make()->toArray();
     $orderItemData['price'] = 100.00;
     $orderItemData['qty_ordered'] = 0;
@@ -54,7 +54,7 @@ test('creating_calculates_total_with_zero_quantity', function () {
     $this->assertEquals($expectedTotal, $orderItem->total);
 });
 
-test('updating_calculates_total_correctly', function () {
+test('updating calculates total correctly', function () {
     $orderItem = OrderItem::factory()->create([
         'price' => 100.00,
         'qty_ordered' => 1,
@@ -74,7 +74,7 @@ test('updating_calculates_total_correctly', function () {
     $this->assertEquals($expectedTotal, $orderItem->total);
 });
 
-test('updating_calculates_total_with_decimal_values', function () {
+test('updating calculates total with decimal values', function () {
     $orderItem = OrderItem::factory()->create([
         'price' => 10.50,
         'qty_ordered' => 1,
@@ -94,7 +94,7 @@ test('updating_calculates_total_with_decimal_values', function () {
     $this->assertEquals($expectedTotal, $orderItem->total);
 });
 
-test('updating_calculates_total_with_large_discount', function () {
+test('updating calculates total with large discount', function () {
     $orderItem = OrderItem::factory()->create([
         'price' => 100.00,
         'qty_ordered' => 1,

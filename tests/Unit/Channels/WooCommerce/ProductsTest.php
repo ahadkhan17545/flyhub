@@ -11,4 +11,4 @@ test('can send products', function () {
     $response = $this->subject->send($this->sourceProducts);
     $spy = $this->spy(\Automattic\WooCommerce\Client::class);
     $spy->shouldReceive('get');
-    }
+});

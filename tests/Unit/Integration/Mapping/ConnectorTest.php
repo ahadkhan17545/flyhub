@@ -1,9 +1,6 @@
 <?php
 
 use App\Integration\Mapping\Connector;
-use App\Integration\Mapping\Utils;
-use App\Integration\Mapping\DataMapper;
-use Adbar\Dot;
 
 uses(Tests\TestCase::class);
 

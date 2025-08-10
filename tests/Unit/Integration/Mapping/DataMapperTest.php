@@ -2,7 +2,6 @@
 
 use App\Integration\Mapping\DataMapper;
 use Adbar\Dot;
-use Carbon\Carbon;
 
 uses(Tests\TestCase::class);
 

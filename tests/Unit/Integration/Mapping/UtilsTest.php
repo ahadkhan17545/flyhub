@@ -1,7 +1,6 @@
 <?php
 
 use App\Integration\Mapping\Utils;
-use Illuminate\Support\Str;
 
 uses(Tests\TestCase::class);
 

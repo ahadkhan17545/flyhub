@@ -1,36 +1,32 @@
 <?php
 
-use Illuminate\Foundation\Testing\WithoutMiddleware;
-use Illuminate\Foundation\Testing\DatabaseTransactions;
-use Tests\ApiTestTrait;
 use App\Models\Tenant\ProductAttribute;
-use ApiTestTrait, WithoutMiddleware, DatabaseTransactions;
 
-uses(Tests\TestCase::class);
+uses(Tests\TestCase::class, Tests\ApiTestTrait::class);
 
-test('create_product_attribute_value', function () {
-    $productAttributeValue = factory(ProductAttribute::class)->make()->toArray();
+test('creates product attribute value', function () {
+    $productAttributeValue = ProductAttribute::factory()->make()->toArray();
     $this->response = $this->json( 'POST', '/api/product-attributes', $productAttributeValue );
     $this->assertApiResponse($productAttributeValue);
-    }
+});
 
-test('read_product_attribute_value', function () {
-    $productAttributeValue = factory(ProductAttribute::class)->create();
+test('reads product attribute value', function () {
+    $productAttributeValue = ProductAttribute::factory()->create();
     $this->response = $this->json( 'GET', '/api/product-attributes/' . $productAttributeValue->id );
     $this->assertApiResponse($productAttributeValue->toArray());
-    }
+});
 
-test('update_product_attribute_value', function () {
-    $productAttributeValue = factory(ProductAttribute::class)->create();
-    $editedProductAttribute = factory(ProductAttribute::class)->make()->toArray();
+test('updates product attribute value', function () {
+    $productAttributeValue = ProductAttribute::factory()->create();
+    $editedProductAttribute = ProductAttribute::factory()->make()->toArray();
     $this->response = $this->json( 'PUT', '/api/product-attributes/' . $productAttributeValue->id, $editedProductAttribute );
     $this->assertApiResponse($editedProductAttribute);
-    }
+});
 
-test('delete_product_attribute_value', function () {
-    $productAttributeValue = factory(ProductAttribute::class)->create();
+test('deletes product attribute value', function () {
+    $productAttributeValue = ProductAttribute::factory()->create();
     $this->response = $this->json( 'DELETE', '/api/product-attributes/' . $productAttributeValue->id );
     $this->assertApiSuccess();
     $this->response = $this->json( 'GET', '/api/product-attributes/' . $productAttributeValue->id );
     $this->response->assertStatus(404);
-    }
+});

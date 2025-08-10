@@ -1,36 +1,32 @@
 <?php
 
-use Illuminate\Foundation\Testing\WithoutMiddleware;
-use Illuminate\Foundation\Testing\DatabaseTransactions;
-use Tests\ApiTestTrait;
 use App\Models\Tenant\Product;
-use ApiTestTrait, WithoutMiddleware, DatabaseTransactions;
 
-uses(Tests\TestCase::class);
+uses(Tests\TestCase::class, Tests\ApiTestTrait::class);
 
-test('create_product', function () {
-    $product = factory(Product::class)->make()->toArray();
+test('creates product', function () {
+    $product = Product::factory()->make()->toArray();
     $this->response = $this->json( 'POST', '/api/products', $product );
     $this->assertApiResponse($product);
-    }
+});
 
-test('read_product', function () {
-    $product = factory(Product::class)->create();
+test('reads product', function () {
+    $product = Product::factory()->create();
     $this->response = $this->json( 'GET', '/api/products/' . $product->id );
     $this->assertApiResponse($product->toArray());
-    }
+});
 
-test('update_product', function () {
-    $product = factory(Product::class)->create();
-    $editedProduct = factory(Product::class)->make()->toArray();
+test('updates product', function () {
+    $product = Product::factory()->create();
+    $editedProduct = Product::factory()->make()->toArray();
     $this->response = $this->json( 'PUT', '/api/products/' . $product->id, $editedProduct );
     $this->assertApiResponse($editedProduct);
-    }
+});
 
-test('delete_product', function () {
-    $product = factory(Product::class)->create();
+test('deletes product', function () {
+    $product = Product::factory()->create();
     $this->response = $this->json( 'DELETE', '/api/products/' . $product->id );
     $this->assertApiSuccess();
     $this->response = $this->json( 'GET', '/api/products/' . $product->id );
     $this->response->assertStatus(404);
-    }
+});

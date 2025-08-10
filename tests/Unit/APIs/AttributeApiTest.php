@@ -1,15 +1,14 @@
 <?php
 
+use App\Models\Tenant\Attribute;
 use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\ApiTestTrait;
-use App\Models\Tenant\Attribute;
-use Illuminate\Database\Eloquent\Factories\Factory;
 
 uses(Tests\TestCase::class, ApiTestTrait::class, WithoutMiddleware::class, DatabaseTransactions::class);
 
 test('can create attribute', function () {
-    $attribute = factory(Attribute::class)->make()->toArray();
+    $attribute = Attribute::factory()->make()->toArray();
 
     $this->response = $this->json(
         'POST',
@@ -21,7 +20,7 @@ test('can create attribute', function () {
 });
 
 test('can read attribute', function () {
-    $attribute = factory(Attribute::class)->create();
+    $attribute = Attribute::factory()->create();
 
     $this->response = $this->json(
         'GET',
@@ -32,8 +31,8 @@ test('can read attribute', function () {
 });
 
 test('can update attribute', function () {
-    $attribute = factory(Attribute::class)->create();
-    $editedAttribute = factory(Attribute::class)->make()->toArray();
+    $attribute = Attribute::factory()->create();
+    $editedAttribute = Attribute::factory()->make()->toArray();
 
     $this->response = $this->json(
         'PUT',
@@ -45,7 +44,7 @@ test('can update attribute', function () {
 });
 
 test('can delete attribute', function () {
-    $attribute = factory(Attribute::class)->create();
+    $attribute = Attribute::factory()->create();
 
     $this->response = $this->json(
         'DELETE',

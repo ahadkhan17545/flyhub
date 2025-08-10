@@ -6,7 +6,7 @@ use Illuminate\Foundation\Testing\DatabaseTransactions;
 
 uses(Tests\TestCase::class, DatabaseTransactions::class);
 
-test('updated_sets_status_to_complete_when_processed_equals_total', function () {
+test('updated sets status to complete when processed equals total', function () {
     $syncResult = \Mockery::mock(ChannelSyncResult::class);
     $syncResult->shouldReceive('wasChanged')->with('processed')->andReturn(true);
     $syncResult->shouldReceive('getAttribute')->with('processed')->andReturn(10);
@@ -17,7 +17,7 @@ test('updated_sets_status_to_complete_when_processed_equals_total', function () 
     $observer->updated($syncResult);
 });
 
-test('updated_sets_status_to_complete_when_processed_exceeds_total', function () {
+test('updated sets status to complete when processed exceeds total', function () {
     $syncResult = \Mockery::mock(ChannelSyncResult::class);
     $syncResult->shouldReceive('wasChanged')->with('processed')->andReturn(true);
     $syncResult->shouldReceive('getAttribute')->with('processed')->andReturn(15);
@@ -28,7 +28,7 @@ test('updated_sets_status_to_complete_when_processed_exceeds_total', function ()
     $observer->updated($syncResult);
 });
 
-test('updated_does_not_change_status_when_processed_less_than_total', function () {
+test('updated does not change status when processed less than total', function () {
     $syncResult = \Mockery::mock(ChannelSyncResult::class);
     $syncResult->shouldReceive('wasChanged')->with('processed')->andReturn(true);
     $syncResult->shouldReceive('getAttribute')->with('processed')->andReturn(7);
@@ -39,7 +39,7 @@ test('updated_does_not_change_status_when_processed_less_than_total', function (
     $observer->updated($syncResult);
 });
 
-test('updated_does_not_change_status_when_processed_was_not_changed', function () {
+test('updated does not change status when processed was not changed', function () {
     $syncResult = \Mockery::mock(ChannelSyncResult::class);
     $syncResult->shouldReceive('wasChanged')->with('processed')->andReturn(false);
     $syncResult->shouldReceive('update')->never();

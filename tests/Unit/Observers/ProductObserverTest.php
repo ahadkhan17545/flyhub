@@ -11,7 +11,7 @@ test('created', function () {
     Queue::fake();
     // $product = Product::factory()->create();
     Queue::assertPushed(SendProductJob::class);
-    }
+});
 
 test('updated', function () {
     Queue::fake();
@@ -32,4 +32,4 @@ test('updated', function () {
     $product->price = 20;
     $product->save();
     $this->assertTrue($product->wasChanged('price') === true);
-    }
+});

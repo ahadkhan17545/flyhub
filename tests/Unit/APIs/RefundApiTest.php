@@ -1,36 +1,32 @@
 <?php
 
-use Illuminate\Foundation\Testing\WithoutMiddleware;
-use Illuminate\Foundation\Testing\DatabaseTransactions;
-use Tests\ApiTestTrait;
 use App\Models\Tenant\Refund;
-use ApiTestTrait, WithoutMiddleware, DatabaseTransactions;
 
-uses(Tests\TestCase::class);
+uses(Tests\TestCase::class, Tests\ApiTestTrait::class);
 
-test('create_refund', function () {
-    $refund = factory(Refund::class)->make()->toArray();
+test('creates refund', function () {
+    $refund = Refund::factory()->make()->toArray();
     $this->response = $this->json( 'POST', '/api/refunds', $refund );
     $this->assertApiResponse($refund);
-    }
+});
 
-test('read_refund', function () {
-    $refund = factory(Refund::class)->create();
+test('reads refund', function () {
+    $refund = Refund::factory()->create();
     $this->response = $this->json( 'GET', '/api/refunds/' . $refund->id );
     $this->assertApiResponse($refund->toArray());
-    }
+});
 
-test('update_refund', function () {
-    $refund = factory(Refund::class)->create();
-    $editedRefund = factory(Refund::class)->make()->toArray();
+test('updates refund', function () {
+    $refund = Refund::factory()->create();
+    $editedRefund = Refund::factory()->make()->toArray();
     $this->response = $this->json( 'PUT', '/api/refunds/' . $refund->id, $editedRefund );
     $this->assertApiResponse($editedRefund);
-    }
+});
 
-test('delete_refund', function () {
-    $refund = factory(Refund::class)->create();
+test('deletes refund', function () {
+    $refund = Refund::factory()->create();
     $this->response = $this->json( 'DELETE', '/api/refunds/' . $refund->id );
     $this->assertApiSuccess();
     $this->response = $this->json( 'GET', '/api/refunds/' . $refund->id );
     $this->response->assertStatus(404);
-    }
+});
