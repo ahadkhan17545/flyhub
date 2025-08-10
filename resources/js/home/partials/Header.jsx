@@ -1,8 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { useLanguage } from '../utils/LanguageContext';
+import { translations } from '../utils/translations';
 
 function Header() {
     const [top, setTop] = useState(true);
+    const { language, toggleLanguage } = useLanguage();
+    const t = translations[language];
 
     // detect whether user has scrolled the page down by 10px
     useEffect(() => {
@@ -23,7 +27,7 @@ function Header() {
                     {/* Site branding */}
                     <div className="flex-shrink-0 mr-4">
                         {/* Logo */}
-                        <Link to="/" className="block" aria-label="Cruip">
+                        <Link to="/" className="block" aria-label="FlyHub">
                             <img src='/images/logo.png'  width="60" height="60" alt="Logo" />
                         </Link>
                     </div>
@@ -31,17 +35,27 @@ function Header() {
                     {/* Site navigation */}
                     <nav className="flex flex-grow">
                         <ul className="flex flex-grow justify-end flex-wrap items-center">
+                            {/* Language Switcher */}
+                            <li className="mr-4">
+                                <button
+                                    onClick={toggleLanguage}
+                                    className="font-medium text-gray-600 hover:text-gray-900 px-3 py-2 flex items-center transition duration-150 ease-in-out border border-gray-300 rounded-md hover:border-gray-400"
+                                >
+                                    <span className="mr-2">{language === 'pt-BR' ? '🇧🇷' : '🇺🇸'}</span>
+                                    {language === 'pt-BR' ? 'EN' : 'PT'}
+                                </button>
+                            </li>
                             <li>
                                 <Link
                                     to="/signin"
                                     className="font-medium text-gray-600 hover:text-gray-900 px-5 py-3 flex items-center transition duration-150 ease-in-out"
                                 >
-                                    Sign in
+                                    {t.signIn}
                                 </Link>
                             </li>
                             <li>
                                 <Link to="/signup" className="btn-sm text-gray-200 bg-gray-900 hover:bg-gray-800 ml-3">
-                                    <span>Sign up</span>
+                                    <span>{t.signUp}</span>
                                     <svg
                                         className="w-3 h-3 fill-current text-gray-400 flex-shrink-0 ml-2 -mr-1"
                                         viewBox="0 0 12 12"

@@ -1,6 +1,11 @@
 import React from 'react';
+import { useLanguage } from '../utils/LanguageContext';
+import { translations } from '../utils/translations';
 
 function Newsletter() {
+    const { language } = useLanguage();
+    const t = translations[language];
+
     return (
         <section>
             <div className="max-w-6xl mx-auto px-4 sm:px-6">
@@ -49,10 +54,9 @@ function Newsletter() {
                         <div className="relative flex flex-col lg:flex-row justify-between items-center">
                             {/* CTA content */}
                             <div className="text-center lg:text-left lg:max-w-xl">
-                                <h3 className="h3 text-white mb-2">Powering your business</h3>
+                                <h3 className="h3 text-white mb-2">{t.newsletterTitle}</h3>
                                 <p className="text-gray-300 text-lg mb-6">
-                                    Lorem ipsum dolor sit amet consectetur adipisicing elit nemo expedita voluptas culpa
-                                    sapiente.
+                                    {t.newsletterSubtitle}
                                 </p>
 
                                 {/* CTA form */}
@@ -61,17 +65,17 @@ function Newsletter() {
                                         <input
                                             type="email"
                                             className="form-input w-full appearance-none bg-gray-800 border border-gray-700 focus:border-gray-600 rounded-sm px-4 py-3 mb-2 sm:mb-0 sm:mr-2 text-white placeholder-gray-500"
-                                            placeholder="Your email…"
-                                            aria-label="Your email…"
+                                            placeholder={t.emailPlaceholder}
+                                            aria-label={t.emailPlaceholder}
                                         />
                                         <a className="btn text-white bg-blue-600 hover:bg-blue-700 shadow" href="#0">
-                                            Subscribe
+                                            {t.subscribeButton}
                                         </a>
                                     </div>
                                     {/* Success message */}
                                     {/* <p className="text-sm text-gray-400 mt-3">Thanks for subscribing!</p> */}
                                     <p className="text-sm text-gray-400 mt-3">
-                                        7 days free trial. No credit card required.
+                                        {t.trialInfo}
                                     </p>
                                 </form>
                             </div>

@@ -1,10 +1,14 @@
 import React, { useState } from 'react';
 import Modal from '../utils/Modal';
+import { useLanguage } from '../utils/LanguageContext';
+import { translations } from '../utils/translations';
 
 import HeroImage from '../images/hero-image.png';
 
 function HeroHome() {
     const [videoModalOpen, setVideoModalOpen] = useState(false);
+    const { language } = useLanguage();
+    const t = translations[language];
 
     return (
         <section className="relative">
@@ -40,12 +44,11 @@ function HeroHome() {
                             <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-teal-400">
                                 FlyHub
                             </span>{' '}
-                            Integração de Marktplaces
+                            {language === 'pt-BR' ? 'Integração de Marketplaces' : 'Marketplace Integration'}
                         </h1>
                         <div className="max-w-3xl mx-auto">
                             <p className="text-xl text-gray-600 mb-8" data-aos="zoom-y-out" data-aos-delay="150">
-                                Our landing page template works on all devices, so you only have to set it up once, and
-                                get beautiful results forever.
+                                {t.heroSubtitle}
                             </p>
                             <div
                                 className="max-w-xs mx-auto sm:max-w-none sm:flex sm:justify-center"
@@ -57,7 +60,7 @@ function HeroHome() {
                                         className="btn text-white bg-blue-600 hover:bg-blue-700 w-full mb-4 sm:w-auto sm:mb-0"
                                         href="#0"
                                     >
-                                        Start free trial
+                                        {t.startFreeTrial}
                                     </a>
                                 </div>
                                 <div>
@@ -65,7 +68,7 @@ function HeroHome() {
                                         className="btn text-white bg-gray-900 hover:bg-gray-800 w-full sm:w-auto sm:ml-4"
                                         href="#0"
                                     >
-                                        Learn more
+                                        {t.learnMore}
                                     </a>
                                 </div>
                             </div>
@@ -137,7 +140,7 @@ function HeroHome() {
                                     <path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10zm0 2C5.373 24 0 18.627 0 12S5.373 0 12 0s12 5.373 12 12-5.373 12-12 12z" />
                                     <path d="M10 17l6-5-6-5z" />
                                 </svg>
-                                <span className="ml-3">Watch the full video (2 min)</span>
+                                <span className="ml-3">{t.watchVideo}</span>
                             </button>
                         </div>
 
