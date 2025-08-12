@@ -20,6 +20,10 @@ test('handles updates status to in progress', function () {
     ]);
 
     $mockResource = Mockery::mock(ChannelResource::class);
+
+    $mockResource->shouldReceive('updateStatus')
+                 ->with($syncLog, 'in_progress')
+                 ->once();
     $mockResource->shouldReceive('send')->andReturn(['success' => true]);
 
     $job = Mockery::mock(ChannelSendJob::class, [$channel, $syncLog])
