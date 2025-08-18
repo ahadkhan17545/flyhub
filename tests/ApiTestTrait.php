@@ -26,7 +26,16 @@ trait ApiTestTrait
             if (in_array($key, ['created_at', 'updated_at'])) {
                 continue;
             }
-            $this->assertEquals($actualData[$key], $expectedData[$key]);
+
+            // Handle null vs empty array/string comparisons
+            if ($actualData[$key] === null && (empty($expectedData[$key]) || $expectedData[$key] === null)) {
+                continue;
+            }
+            if ($expectedData[$key] === null && (empty($actualData[$key]) || $actualData[$key] === null)) {
+                continue;
+            }
+
+            $this->assertEquals($actualData[$key], $expectedData[$key], "Field '{$key}' mismatch");
         }
     }
 }

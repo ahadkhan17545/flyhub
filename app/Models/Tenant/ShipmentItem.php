@@ -2,6 +2,7 @@
 
 namespace App\Models\Tenant;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -132,6 +133,8 @@ use Illuminate\Database\Eloquent\Model;
  */
 class ShipmentItem extends Model
 {
+    use HasFactory;
+
     /**
      * @var string
      */
@@ -155,6 +158,16 @@ class ShipmentItem extends Model
     public static $rules = [
         'shipment_id' => 'required',
     ];
+
+    /**
+     * Create a new factory instance for the model.
+     *
+     * @return \Illuminate\Database\Eloquent\Factories\Factory
+     */
+    protected static function newFactory()
+    {
+        return \Database\Factories\ShipmentItemFactory::new();
+    }
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo

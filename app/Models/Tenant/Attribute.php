@@ -2,6 +2,7 @@
 
 namespace App\Models\Tenant;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -120,6 +121,8 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Attribute extends Model
 {
+    use HasFactory;
+
     /**
      * @var string
      */
@@ -153,6 +156,16 @@ class Attribute extends Model
         'name' => 'required',
         'type' => 'required',
     ];
+
+    /**
+     * Create a new factory instance for the model.
+     *
+     * @return \Illuminate\Database\Eloquent\Factories\Factory
+     */
+    protected static function newFactory()
+    {
+        return \Database\Factories\AttributeFactory::new();
+    }
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany

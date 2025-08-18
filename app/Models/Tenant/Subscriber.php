@@ -2,6 +2,7 @@
 
 namespace App\Models\Tenant;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -78,6 +79,8 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Subscriber extends Model
 {
+    use HasFactory;
+
     /**
      * @var string
      */
@@ -107,6 +110,16 @@ class Subscriber extends Model
         'is_subscribed' => 'required',
         'channel_id' => 'required',
     ];
+
+    /**
+     * Create a new factory instance for the model.
+     *
+     * @return \Illuminate\Database\Eloquent\Factories\Factory
+     */
+    protected static function newFactory()
+    {
+        return \Database\Factories\SubscriberFactory::new();
+    }
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo

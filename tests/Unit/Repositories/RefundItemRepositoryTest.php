@@ -1,8 +1,13 @@
 <?php
 
 use App\Models\Tenant\RefundItem;
+use App\Repositories\Tenant\RefundItemRepository;
 
 uses(Tests\TestCase::class);
+
+beforeEach(function () {
+    $this->refundItemRepo = new RefundItemRepository();
+});
 
 test('create refund item', function () {
     $refundItem = RefundItem::factory()->make()->toArray();
@@ -34,5 +39,5 @@ test('delete refund item', function () {
     $refundItem = RefundItem::factory()->create();
     $resp = $this->refundItemRepo->delete($refundItem->id);
     $this->assertTrue($resp);
-    $this->assertNull(RefundItem::find($refundItem->id), 'RefundItem should not exist in DB');
+    $this->assertNull($this->refundItemRepo->find($refundItem->id), 'RefundItem should not exist in DB');
 });

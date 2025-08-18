@@ -1,8 +1,13 @@
 <?php
 
 use App\Models\Tenant\OrderPayment;
+use App\Repositories\Tenant\OrderPaymentRepository;
 
 uses(Tests\TestCase::class);
+
+beforeEach(function () {
+    $this->orderPaymentRepo = new OrderPaymentRepository();
+});
 
 test('create order payment', function () {
     $orderPayment = OrderPayment::factory()->make()->toArray();
@@ -34,5 +39,5 @@ test('delete order payment', function () {
     $orderPayment = OrderPayment::factory()->create();
     $resp = $this->orderPaymentRepo->delete($orderPayment->id);
     $this->assertTrue($resp);
-    $this->assertNull(OrderPayment::find($orderPayment->id), 'OrderPayment should not exist in DB');
+    $this->assertNull($this->orderPaymentRepo->find($orderPayment->id), 'OrderPayment should not exist in DB');
 });

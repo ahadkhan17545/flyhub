@@ -1,8 +1,13 @@
 <?php
 
 use App\Models\Tenant\Shipment;
+use App\Repositories\Tenant\ShipmentRepository;
 
 uses(Tests\TestCase::class);
+
+beforeEach(function () {
+    $this->shipmentRepo = new ShipmentRepository();
+});
 
 test('create shipment', function () {
     $shipment = Shipment::factory()->make()->toArray();
@@ -34,5 +39,5 @@ test('delete shipment', function () {
     $shipment = Shipment::factory()->create();
     $resp = $this->shipmentRepo->delete($shipment->id);
     $this->assertTrue($resp);
-    $this->assertNull(Shipment::find($shipment->id), 'Shipment should not exist in DB');
+    $this->assertNull($this->shipmentRepo->find($shipment->id), 'Shipment should not exist in DB');
 });

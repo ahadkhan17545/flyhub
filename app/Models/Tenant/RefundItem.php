@@ -2,6 +2,7 @@
 
 namespace App\Models\Tenant;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -170,6 +171,8 @@ use Illuminate\Database\Eloquent\Model;
  */
 class RefundItem extends Model
 {
+    use HasFactory;
+
     /**
      * @var string
      */
@@ -196,6 +199,16 @@ class RefundItem extends Model
         'total' => 'required',
         'base_total' => 'required',
     ];
+
+    /**
+     * Create a new factory instance for the model.
+     *
+     * @return \Illuminate\Database\Eloquent\Factories\Factory
+     */
+    protected static function newFactory()
+    {
+        return \Database\Factories\RefundItemFactory::new();
+    }
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo

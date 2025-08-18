@@ -1,8 +1,13 @@
 <?php
 
 use App\Models\Tenant\User;
+use App\Repositories\Tenant\UserRepository;
 
 uses(Tests\TestCase::class);
+
+beforeEach(function () {
+    $this->userRepo = new UserRepository();
+});
 
 test('create user', function () {
     $user = User::factory()->make()->toArray();
@@ -34,5 +39,5 @@ test('delete user', function () {
     $user = User::factory()->create();
     $resp = $this->userRepo->delete($user->id);
     $this->assertTrue($resp);
-    $this->assertNull(User::find($user->id), 'User should not exist in DB');
+    $this->assertNull($this->userRepo->find($user->id), 'User should not exist in DB');
 });

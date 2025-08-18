@@ -2,6 +2,7 @@
 
 namespace App\Models\Tenant;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -137,6 +138,8 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Customer extends Model
 {
+    use HasFactory;
+
     /**
      * @var string
      */
@@ -173,6 +176,16 @@ class Customer extends Model
      * @var string[]
      */
     protected $appends = ['person_type'];
+
+    /**
+     * Create a new factory instance for the model.
+     *
+     * @return \Illuminate\Database\Eloquent\Factories\Factory
+     */
+    protected static function newFactory()
+    {
+        return \Database\Factories\CustomerFactory::new();
+    }
 
     /**
      * @return float

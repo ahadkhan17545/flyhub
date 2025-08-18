@@ -1,8 +1,13 @@
 <?php
 
 use App\Models\Tenant\Subscriber;
+use App\Repositories\Tenant\SubscriberRepository;
 
 uses(Tests\TestCase::class);
+
+beforeEach(function () {
+    $this->subscriberRepo = new SubscriberRepository();
+});
 
 test('create subscriber', function () {
     $subscriber = Subscriber::factory()->make()->toArray();
@@ -34,5 +39,5 @@ test('delete subscriber', function () {
     $subscriber = Subscriber::factory()->create();
     $resp = $this->subscriberRepo->delete($subscriber->id);
     $this->assertTrue($resp);
-    $this->assertNull(Subscriber::find($subscriber->id), 'Subscriber should not exist in DB');
+    $this->assertNull($this->subscriberRepo->find($subscriber->id), 'Subscriber should not exist in DB');
 });

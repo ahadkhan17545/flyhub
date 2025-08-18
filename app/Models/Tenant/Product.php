@@ -2,6 +2,7 @@
 
 namespace App\Models\Tenant;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -310,10 +311,22 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Product extends Model
 {
+    use HasFactory;
+
     /**
      * @var string
      */
     public $table = 'products';
+
+    /**
+     * Create a new factory instance for the model.
+     *
+     * @return \Illuminate\Database\Eloquent\Factories\Factory
+     */
+    protected static function newFactory()
+    {
+        return \Database\Factories\ProductFactory::new();
+    }
 
     /**
      * @var string[]

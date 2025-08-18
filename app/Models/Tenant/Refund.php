@@ -2,6 +2,7 @@
 
 namespace App\Models\Tenant;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -188,6 +189,8 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Refund extends Model
 {
+    use HasFactory;
+
     /**
      * @var string
      */
@@ -213,6 +216,16 @@ class Refund extends Model
     public static $rules = [
         'email_sent' => 'required',
     ];
+
+    /**
+     * Create a new factory instance for the model.
+     *
+     * @return \Illuminate\Database\Eloquent\Factories\Factory
+     */
+    protected static function newFactory()
+    {
+        return \Database\Factories\RefundFactory::new();
+    }
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo

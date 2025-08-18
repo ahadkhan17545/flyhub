@@ -1,38 +1,43 @@
 <?php
 
 use App\Models\Tenant\Tax;
+use App\Repositories\Tenant\TaxRateRepository;
 
 uses(Tests\TestCase::class);
 
+beforeEach(function () {
+    $this->taxRateRepo = new TaxRateRepository();
+});
+
 test('create tax rate', function () {
-    $taxRate = Tax::factory()->make()->toArray();
-    $createdTaxRate = $this->taxRateRepo->create($taxRate);
-    $createdTaxRate = $createdTaxRate->toArray();
-    $this->assertArrayHasKey('id', $createdTaxRate);
-    $this->assertNotNull($createdTaxRate['id'], 'Created TaxRate must have id specified');
-    $this->assertNotNull(Tax::find($createdTaxRate['id']), 'TaxRate with given id must be in DB');
-    $this->assertModelData($taxRate, $createdTaxRate);
+    $tax = Tax::factory()->make()->toArray();
+    $createdTax = $this->taxRateRepo->create($tax);
+    $createdTax = $createdTax->toArray();
+    $this->assertArrayHasKey('id', $createdTax);
+    $this->assertNotNull($createdTax['id'], 'Created Tax must have id specified');
+    $this->assertNotNull(Tax::find($createdTax['id']), 'Tax with given id must be in DB');
+    $this->assertModelData($tax, $createdTax);
 });
 
 test('read tax rate', function () {
-    $taxRate = Tax::factory()->create();
-    $dbTaxRate = $this->taxRateRepo->find($taxRate->id);
-    $dbTaxRate = $dbTaxRate->toArray();
-    $this->assertModelData($taxRate->toArray(), $dbTaxRate);
+    $tax = Tax::factory()->create();
+    $dbTax = $this->taxRateRepo->find($tax->id);
+    $dbTax = $dbTax->toArray();
+    $this->assertModelData($tax->toArray(), $dbTax);
 });
 
 test('update tax rate', function () {
-    $taxRate = Tax::factory()->create();
-    $fakeTaxRate = Tax::factory()->make()->toArray();
-    $updatedTaxRate = $this->taxRateRepo->update($fakeTaxRate, $taxRate->id);
-    $this->assertModelData($fakeTaxRate, $updatedTaxRate->toArray());
-    $dbTaxRate = $this->taxRateRepo->find($taxRate->id);
-    $this->assertModelData($fakeTaxRate, $dbTaxRate->toArray());
+    $tax = Tax::factory()->create();
+    $fakeTax = Tax::factory()->make()->toArray();
+    $updatedTax = $this->taxRateRepo->update($fakeTax, $tax->id);
+    $this->assertModelData($fakeTax, $updatedTax->toArray());
+    $dbTax = $this->taxRateRepo->find($tax->id);
+    $this->assertModelData($fakeTax, $dbTax->toArray());
 });
 
 test('delete tax rate', function () {
-    $taxRate = Tax::factory()->create();
-    $resp = $this->taxRateRepo->delete($taxRate->id);
+    $tax = Tax::factory()->create();
+    $resp = $this->taxRateRepo->delete($tax->id);
     $this->assertTrue($resp);
-    $this->assertNull(Tax::find($taxRate->id), 'TaxRate should not exist in DB');
+    $this->assertNull($this->taxRateRepo->find($tax->id), 'Tax should not exist in DB');
 });

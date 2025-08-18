@@ -2,6 +2,7 @@
 
 namespace App\Models\Tenant;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -60,6 +61,16 @@ use Illuminate\Database\Eloquent\Model;
  */
 class AttributeSet extends Model
 {
+    use HasFactory;
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function attributeSet()
+    {
+        return $this->belongsTo(AttributeSet::class, 'attribute_set_id');
+    }
+
     /**
      * @var string
      */
@@ -81,6 +92,16 @@ class AttributeSet extends Model
      * @var array
      */
     public static $rules = ['name' => 'required'];
+
+    /**
+     * Create a new factory instance for the model.
+     *
+     * @return \Illuminate\Database\Eloquent\Factories\Factory
+     */
+    protected static function newFactory()
+    {
+        return \Database\Factories\AttributeSetFactory::new();
+    }
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany

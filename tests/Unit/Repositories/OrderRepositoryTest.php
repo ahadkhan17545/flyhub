@@ -1,8 +1,13 @@
 <?php
 
 use App\Models\Tenant\Order;
+use App\Repositories\Tenant\OrderRepository;
 
 uses(Tests\TestCase::class);
+
+beforeEach(function () {
+    $this->orderRepo = new OrderRepository();
+});
 
 test('create order', function () {
     $order = Order::factory()->make()->toArray();
@@ -34,5 +39,5 @@ test('delete order', function () {
     $order = Order::factory()->create();
     $resp = $this->orderRepo->delete($order->id);
     $this->assertTrue($resp);
-    $this->assertNull(Order::find($order->id), 'Order should not exist in DB');
+    $this->assertNull($this->orderRepo->find($order->id), 'Order should not exist in DB');
 });

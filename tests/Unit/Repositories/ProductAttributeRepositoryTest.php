@@ -1,8 +1,13 @@
 <?php
 
 use App\Models\Tenant\ProductAttribute;
+use App\Repositories\Tenant\ProductAttributeRepository;
 
 uses(Tests\TestCase::class);
+
+beforeEach(function () {
+    $this->productAttributeRepo = new ProductAttributeRepository();
+});
 
 test('create product attribute value', function () {
     $productAttribute = ProductAttribute::factory()->make()->toArray();
@@ -34,5 +39,5 @@ test('delete product attribute value', function () {
     $productAttribute = ProductAttribute::factory()->create();
     $resp = $this->productAttributeRepo->delete($productAttribute->id);
     $this->assertTrue($resp);
-    $this->assertNull(ProductAttribute::find($productAttribute->id), 'ProductAttribute should not exist in DB');
+    $this->assertNull($this->productAttributeRepo->find($productAttribute->id), 'ProductAttribute should not exist in DB');
 });

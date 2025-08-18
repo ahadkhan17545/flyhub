@@ -1,8 +1,13 @@
 <?php
 
 use App\Models\Tenant;
+use App\Repositories\TenantRepository;
 
 uses(Tests\TestCase::class);
+
+beforeEach(function () {
+    $this->tenantRepo = new TenantRepository();
+});
 
 test('create tenant', function () {
     $tenant = Tenant::factory()->make()->toArray();
@@ -34,5 +39,5 @@ test('delete tenant', function () {
     $tenant = Tenant::factory()->create();
     $resp = $this->tenantRepo->delete($tenant->id);
     $this->assertTrue($resp);
-    $this->assertNull(Tenant::find($tenant->id), 'Tenant should not exist in DB');
+    $this->assertNull($this->tenantRepo->find($tenant->id), 'Tenant should not exist in DB');
 });

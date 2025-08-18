@@ -2,6 +2,7 @@
 
 namespace App\Models\Tenant;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -326,6 +327,8 @@ use Illuminate\Database\Eloquent\Model;
  */
 class OrderItem extends Model
 {
+    use HasFactory;
+
     /**
      * @var string
      */
@@ -350,6 +353,16 @@ class OrderItem extends Model
         'price' => 'required',
         'total' => 'required',
     ];
+
+    /**
+     * Create a new factory instance for the model.
+     *
+     * @return \Illuminate\Database\Eloquent\Factories\Factory
+     */
+    protected static function newFactory()
+    {
+        return \Database\Factories\OrderItemFactory::new();
+    }
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo

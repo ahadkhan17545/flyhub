@@ -1,10 +1,15 @@
 <?php
 
 use App\Models\Tenant\OrderItem;
+use App\Repositories\Tenant\OrderItemRepository;
 
 uses(Tests\TestCase::class);
 
-test('creates order item', function () {
+beforeEach(function () {
+    $this->orderItemRepo = new OrderItemRepository();
+});
+
+test('create order item', function () {
     $orderItem = OrderItem::factory()->make()->toArray();
     $createdOrderItem = $this->orderItemRepo->create($orderItem);
     $createdOrderItem = $createdOrderItem->toArray();
@@ -14,14 +19,14 @@ test('creates order item', function () {
     $this->assertModelData($orderItem, $createdOrderItem);
 });
 
-test('reads order item', function () {
+test('read order item', function () {
     $orderItem = OrderItem::factory()->create();
     $dbOrderItem = $this->orderItemRepo->find($orderItem->id);
     $dbOrderItem = $dbOrderItem->toArray();
     $this->assertModelData($orderItem->toArray(), $dbOrderItem);
 });
 
-test('updates order item', function () {
+test('update order item', function () {
     $orderItem = OrderItem::factory()->create();
     $fakeOrderItem = OrderItem::factory()->make()->toArray();
     $updatedOrderItem = $this->orderItemRepo->update($fakeOrderItem, $orderItem->id);
@@ -30,9 +35,9 @@ test('updates order item', function () {
     $this->assertModelData($fakeOrderItem, $dbOrderItem->toArray());
 });
 
-test('deletes order item', function () {
+test('delete order item', function () {
     $orderItem = OrderItem::factory()->create();
     $resp = $this->orderItemRepo->delete($orderItem->id);
     $this->assertTrue($resp);
-    $this->assertNull(OrderItem::find($orderItem->id), 'OrderItem should not exist in DB');
+    $this->assertNull($this->orderItemRepo->find($orderItem->id), 'OrderItem should not exist in DB');
 });
