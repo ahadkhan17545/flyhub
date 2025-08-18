@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Tenant\Invoice;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class InvoiceFactory extends Factory
@@ -9,7 +10,7 @@ class InvoiceFactory extends Factory
     /**
      * @var string
      */
-    protected $model = Attribute::class;
+    protected $model = Invoice::class;
 
     /**
      * @return array
@@ -17,23 +18,16 @@ class InvoiceFactory extends Factory
     public function definition()
     {
         return [
-            'state' => $this->faker->word,
-            'email_sent' => $this->faker->word,
-            'total_qty' => $this->faker->randomDigitNotNull,
-            'sub_total' => $this->faker->word,
-            'base_sub_total' => $this->faker->word,
-            'grand_total' => $this->faker->word,
-            'base_grand_total' => $this->faker->word,
-            'shipping_amount' => $this->faker->word,
-            'base_shipping_amount' => $this->faker->word,
-            'tax_amount' => $this->faker->word,
-            'base_tax_amount' => $this->faker->word,
-            'discount_amount' => $this->faker->word,
-            'base_discount_amount' => $this->faker->word,
-            'order_id' => $this->faker->randomDigitNotNull,
-            'transaction_id' => $this->faker->word,
-            'created_at' => $this->faker->date('Y-m-d H:i:s'),
-            'updated_at' => $this->faker->date('Y-m-d H:i:s'),
+            'state' => $this->faker->optional()->randomElement(['pending', 'paid', 'cancelled', 'refunded']),
+            'email_sent' => $this->faker->boolean,
+            'total_qty' => $this->faker->optional()->numberBetween(1, 10),
+            'sub_total' => $this->faker->optional()->randomFloat(4, 10, 1000),
+            'grand_total' => $this->faker->optional()->randomFloat(4, 10, 1000),
+            'shipping_amount' => $this->faker->optional()->randomFloat(4, 0, 100),
+            'tax_amount' => $this->faker->optional()->randomFloat(4, 0, 100),
+            'discount_amount' => $this->faker->optional()->randomFloat(4, 0, 50),
+            'order_id' => null, // Will be set by the test if needed
+            'transaction_id' => $this->faker->optional()->uuid,
         ];
     }
 }

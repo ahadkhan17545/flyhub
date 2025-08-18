@@ -3,6 +3,7 @@
 namespace App\Models\Tenant;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 /**
  * App\Models\Invoice
@@ -134,6 +135,8 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Invoice extends Model
 {
+    use HasFactory;
+
     /**
      * @var string
      */
@@ -157,6 +160,16 @@ class Invoice extends Model
      * @var array
      */
     public static $rules = ['order_id' => 'required'];
+
+    /**
+     * Create a new factory instance for the model.
+     *
+     * @return \Illuminate\Database\Eloquent\Factories\Factory
+     */
+    protected static function newFactory()
+    {
+        return \Database\Factories\InvoiceFactory::new();
+    }
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo

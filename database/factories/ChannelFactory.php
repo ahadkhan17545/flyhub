@@ -18,16 +18,8 @@ class ChannelFactory extends Factory
     public function definition()
     {
         return [
-            'code' => $this->faker->word,
-            'name' => $this->faker->word,
-            'description' => $this->faker->text,
-            'timezone' => $this->faker->word,
-            'hostname' => $this->faker->word,
-            'logo' => $this->faker->word,
-            'favicon' => $this->faker->word,
-            'root_category_id' => $this->faker->randomDigitNotNull,
-            'created_at' => $this->faker->date('Y-m-d H:i:s'),
-            'updated_at' => $this->faker->date('Y-m-d H:i:s'),
+            'code' => $this->faker->unique()->slug,
+            'name' => $this->faker->company,
         ];
     }
 }

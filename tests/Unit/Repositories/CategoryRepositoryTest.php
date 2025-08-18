@@ -1,8 +1,13 @@
 <?php
 
 use App\Models\Tenant\Category;
+use App\Repositories\Tenant\CategoryRepository;
 
 uses(Tests\TestCase::class);
+
+beforeEach(function () {
+    $this->categoryRepo = new CategoryRepository();
+});
 
 test('create category', function () {
     $category = Category::factory()->make()->toArray();

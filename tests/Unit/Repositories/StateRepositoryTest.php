@@ -9,7 +9,7 @@ beforeEach(function () {
     $this->stateRepo = new StateRepository();
 });
 
-test('create country', function () {
+test('create state', function () {
     $state = State::factory()->make()->toArray();
     $createdState = $this->stateRepo->create($state);
     $createdState = $createdState->toArray();
@@ -19,14 +19,14 @@ test('create country', function () {
     $this->assertModelData($state, $createdState);
 });
 
-test('read country', function () {
+test('read state', function () {
     $state = State::factory()->create();
     $dbState = $this->stateRepo->find($state->id);
     $dbState = $dbState->toArray();
     $this->assertModelData($state->toArray(), $dbState);
 });
 
-test('update country', function () {
+test('update state', function () {
     $state = State::factory()->create();
     $fakeState = State::factory()->make()->toArray();
     $updatedState = $this->stateRepo->update($fakeState, $state->id);
@@ -35,7 +35,7 @@ test('update country', function () {
     $this->assertModelData($fakeState, $dbState->toArray());
 });
 
-test('delete country', function () {
+test('delete state', function () {
     $state = State::factory()->create();
     $resp = $this->stateRepo->delete($state->id);
     $this->assertTrue($resp);

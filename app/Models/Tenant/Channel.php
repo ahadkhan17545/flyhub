@@ -3,8 +3,8 @@
 namespace App\Models\Tenant;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Support\Carbon;
-use Log;
 
 use function _\get;
 
@@ -93,6 +93,8 @@ use function _\get;
  */
 class Channel extends Model
 {
+    use HasFactory;
+
     /**
      * @var string
      */
@@ -107,6 +109,16 @@ class Channel extends Model
      * @var array
      */
     public static $rules = [];
+
+    /**
+     * Create a new factory instance for the model.
+     *
+     * @return \Illuminate\Database\Eloquent\Factories\Factory
+     */
+    protected static function newFactory()
+    {
+        return \Database\Factories\ChannelFactory::new();
+    }
 
     /**
      * @var array

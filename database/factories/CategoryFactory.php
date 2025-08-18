@@ -18,14 +18,10 @@ class CategoryFactory extends Factory
     public function definition()
     {
         return [
-            'name' => $this->faker->name,
-            'status' => $this->faker->word,
-            'description' => $this->faker->text,
-            'created_at' => $this->faker->date('Y-m-d H:i:s'),
-            'updated_at' => $this->faker->date('Y-m-d H:i:s'),
-            '_lft' => $this->faker->randomDigitNotNull,
-            '_rgt' => $this->faker->randomDigitNotNull,
-            'parent_id' => $this->faker->randomDigitNotNull,
+            'name' => $this->faker->words(2, true),
+            'status' => $this->faker->boolean,
+            'remote_id' => $this->faker->optional()->uuid,
+            'parent_id' => null, // Will be set by the test if needed
         ];
     }
 }

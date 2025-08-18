@@ -18,10 +18,12 @@ class StateFactory extends Factory
     public function definition()
     {
         return [
-            'country_code' => $this->faker->word,
-            'code' => $this->faker->word,
-            'name' => $this->faker->word,
-            'country_id' => $this->faker->randomDigitNotNull
+            'country_code' => $this->faker->regexify('[A-Z]{2}'),
+            'code' => $this->faker->regexify('[A-Z]{2}'),
+            'name' => $this->faker->state,
+            'ibge_id' => $this->faker->unique()->numberBetween(1000, 9999),
+            'lat' => round($this->faker->latitude, 2),
+            'lng' => round($this->faker->longitude, 2),
         ];
     }
 }

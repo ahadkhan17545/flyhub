@@ -18,19 +18,14 @@ class AttributeFactory extends Factory
     public function definition()
     {
         return [
-            'code' => $this->faker->word,
-            'name' => $this->faker->name,
-            'type' => $this->faker->word,
-            'validation' => $this->faker->word,
-            'position' => $this->faker->randomDigitNotNull,
-            'is_required' => $this->faker->word,
-            'is_unique' => $this->faker->word,
-            'value_per_channel' => $this->faker->word,
-            'is_filterable' => $this->faker->word,
-            'is_configurable' => $this->faker->word,
-            'is_user_defined' => $this->faker->word,
-            'created_at' => $this->faker->date('Y-m-d H:i:s'),
-            'updated_at' => $this->faker->date('Y-m-d H:i:s'),
+            'code' => $this->faker->unique()->slug,
+            'name' => $this->faker->words(2, true),
+            'input_type' => $this->faker->randomElement(['text', 'textarea', 'select', 'multiselect', 'boolean', 'date', 'datetime']),
+            'is_required' => $this->faker->boolean,
+            'value_per_channel' => $this->faker->boolean,
+            'is_configurable' => $this->faker->boolean,
+            'is_user_defined' => $this->faker->boolean,
+            'default_value' => $this->faker->optional()->sentence,
         ];
     }
 }

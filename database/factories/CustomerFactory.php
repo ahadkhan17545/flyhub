@@ -18,18 +18,19 @@ class CustomerFactory extends Factory
     public function definition()
     {
         return [
-            'channel_id' => $this->faker->randomDigitNotNull,
-            'name' => $this->faker->word,
-            'gender' => $this->faker->word,
-            'birthdate' => $this->faker->date(),
-            'email' => $this->faker->word,
-            'status' => $this->faker->word,
-            'customer_group_id' => $this->faker->randomDigitNotNull,
-            'subscribed_to_news_letter' => $this->faker->word,
-            'phone' => $this->faker->word,
-            'notes' => $this->faker->text,
-            'created_at' => $this->faker->date('Y-m-d H:i:s'),
-            'updated_at' => $this->faker->date('Y-m-d H:i:s'),
+            'name' => $this->faker->name,
+            'cpf_cnpj' => $this->faker->optional()->numerify('###########'),
+            'ie' => $this->faker->optional()->numerify('########'),
+            'rg' => $this->faker->optional()->numerify('########'),
+            'gender' => $this->faker->optional()->randomElement(['M', 'F']),
+            'birthdate' => $this->faker->optional()->date(),
+            'email' => $this->faker->unique()->safeEmail,
+            'status' => $this->faker->boolean,
+            'subscribed_to_news_letter' => $this->faker->boolean,
+            'phone' => $this->faker->optional()->phoneNumber,
+            'cellphone' => $this->faker->optional()->phoneNumber,
+            'notes' => $this->faker->optional()->sentence,
+            'remote_id' => $this->faker->optional()->uuid,
         ];
     }
 }

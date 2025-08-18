@@ -1,8 +1,13 @@
 <?php
 
 use App\Models\Tenant\Channel;
+use App\Repositories\Tenant\ChannelRepository;
 
 uses(Tests\TestCase::class);
+
+beforeEach(function () {
+    $this->channelRepo = new ChannelRepository();
+});
 
 test('create channel', function () {
     $channel = Channel::factory()->make()->toArray();

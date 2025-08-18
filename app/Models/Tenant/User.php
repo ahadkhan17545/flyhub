@@ -5,6 +5,7 @@ namespace App\Models\Tenant;
 use Illuminate\Database\Eloquent\InvalidCastException;
 use Spatie\Permission\Traits\HasRoles;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\LazyLoadingViolationException;
 use LogicException;
 
@@ -95,7 +96,7 @@ use LogicException;
  */
 class User extends Model
 {
-    use HasRoles;
+    use HasRoles, HasFactory;
 
     /**
      * @var string
@@ -119,6 +120,16 @@ class User extends Model
         'name' => 'required',
         'email' => 'required|email',
     ];
+
+    /**
+     * Create a new factory instance for the model.
+     *
+     * @return \Illuminate\Database\Eloquent\Factories\Factory
+     */
+    protected static function newFactory()
+    {
+        return \Database\Factories\UserFactory::new();
+    }
 
     /**
      * @return mixed

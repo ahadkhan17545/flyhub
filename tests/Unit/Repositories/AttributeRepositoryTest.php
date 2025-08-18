@@ -1,8 +1,13 @@
 <?php
 
 use App\Models\Tenant\Attribute;
+use App\Repositories\Tenant\AttributeRepository;
 
 uses(Tests\TestCase::class);
+
+beforeEach(function () {
+    $this->attributeRepo = new AttributeRepository();
+});
 
 test('create attribute', function () {
     $attribute = Attribute::factory()->make()->toArray();

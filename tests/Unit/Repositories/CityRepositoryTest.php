@@ -1,38 +1,43 @@
 <?php
 
 use App\Models\Tenant\City;
+use App\Repositories\Tenant\CityRepository;
 
 uses(Tests\TestCase::class);
 
-test('create country state', function () {
-    $countryState = City::factory()->make()->toArray();
-    $createdCountryState = $this->countryStateRepo->create($countryState);
-    $createdCountryState = $createdCountryState->toArray();
-    $this->assertArrayHasKey('id', $createdCountryState);
-    $this->assertNotNull($createdCountryState['id'], 'Created CountryState must have id specified');
-    $this->assertNotNull(City::find($createdCountryState['id']), 'CountryState with given id must be in DB');
-    $this->assertModelData($countryState, $createdCountryState);
+beforeEach(function () {
+    $this->cityRepo = new CityRepository();
 });
 
-test('read country state', function () {
-    $countryState = City::factory()->create();
-    $dbCountryState = $this->countryStateRepo->find($countryState->id);
-    $dbCountryState = $dbCountryState->toArray();
-    $this->assertModelData($countryState->toArray(), $dbCountryState);
+test('create city', function () {
+    $city = City::factory()->make()->toArray();
+    $createdCity = $this->cityRepo->create($city);
+    $createdCity = $createdCity->toArray();
+    $this->assertArrayHasKey('id', $createdCity);
+    $this->assertNotNull($createdCity['id'], 'Created City must have id specified');
+    $this->assertNotNull(City::find($createdCity['id']), 'City with given id must be in DB');
+    $this->assertModelData($city, $createdCity);
 });
 
-test('update country state', function () {
-    $countryState = City::factory()->create();
-    $fakeCountryState = City::factory()->make()->toArray();
-    $updatedCountryState = $this->countryStateRepo->update($fakeCountryState, $countryState->id);
-    $this->assertModelData($fakeCountryState, $updatedCountryState->toArray());
-    $dbCountryState = $this->countryStateRepo->find($countryState->id);
-    $this->assertModelData($fakeCountryState, $dbCountryState->toArray());
+test('read city', function () {
+    $city = City::factory()->create();
+    $dbCity = $this->cityRepo->find($city->id);
+    $dbCity = $dbCity->toArray();
+    $this->assertModelData($city->toArray(), $dbCity);
 });
 
-test('delete country state', function () {
-    $countryState = City::factory()->create();
-    $resp = $this->countryStateRepo->delete($countryState->id);
+test('update city', function () {
+    $city = City::factory()->create();
+    $fakeCity = City::factory()->make()->toArray();
+    $updatedCity = $this->cityRepo->update($fakeCity, $city->id);
+    $this->assertModelData($fakeCity, $updatedCity->toArray());
+    $dbCity = $this->cityRepo->find($city->id);
+    $this->assertModelData($fakeCity, $dbCity->toArray());
+});
+
+test('delete city', function () {
+    $city = City::factory()->create();
+    $resp = $this->cityRepo->delete($city->id);
     $this->assertTrue($resp);
-    $this->assertNull(City::find($countryState->id), 'CountryState should not exist in DB');
+    $this->assertNull(City::find($city->id), 'City should not exist in DB');
 });

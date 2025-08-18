@@ -3,6 +3,7 @@
 namespace App\Models\Tenant;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 /**
  * App\Models\InventorySource
@@ -163,6 +164,8 @@ use Illuminate\Database\Eloquent\Model;
  */
 class InventorySource extends Model
 {
+    use HasFactory;
+
     /**
      * @var string
      */
@@ -198,6 +201,16 @@ class InventorySource extends Model
         'postcode' => 'required',
         'priority' => 'required',
     ];
+
+    /**
+     * Create a new factory instance for the model.
+     *
+     * @return \Illuminate\Database\Eloquent\Factories\Factory
+     */
+    protected static function newFactory()
+    {
+        return \Database\Factories\InventorySourceFactory::new();
+    }
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany

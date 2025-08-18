@@ -1,8 +1,13 @@
 <?php
 
 use App\Models\Tenant\InventorySource;
+use App\Repositories\Tenant\InventorySourceRepository;
 
 uses(Tests\TestCase::class);
+
+beforeEach(function () {
+    $this->inventorySourceRepo = new InventorySourceRepository();
+});
 
 test('create inventory source', function () {
     $inventorySource = InventorySource::factory()->make()->toArray();

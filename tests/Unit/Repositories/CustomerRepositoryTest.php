@@ -1,11 +1,19 @@
 <?php
 
 use App\Models\Tenant\Customer;
+use App\Models\Tenant\Channel;
+use App\Repositories\Tenant\CustomerRepository;
 
 uses(Tests\TestCase::class);
 
+beforeEach(function () {
+    $this->customerRepo = new CustomerRepository();
+    // Create a channel for foreign key constraints
+    $this->channel = Channel::factory()->create();
+});
+
 test('create customer', function () {
-    $customer = Customer::factory()->make()->toArray();
+    $customer = Customer::factory()->make(['channel_id' => $this->channel->id])->toArray();
     $createdCustomer = $this->customerRepo->create($customer);
     $createdCustomer = $createdCustomer->toArray();
     $this->assertArrayHasKey('id', $createdCustomer);
@@ -15,15 +23,15 @@ test('create customer', function () {
 });
 
 test('read customer', function () {
-    $customer = Customer::factory()->create();
+    $customer = Customer::factory()->create(['channel_id' => $this->channel->id]);
     $dbCustomer = $this->customerRepo->find($customer->id);
     $dbCustomer = $dbCustomer->toArray();
     $this->assertModelData($customer->toArray(), $dbCustomer);
 });
 
 test('update customer', function () {
-    $customer = Customer::factory()->create();
-    $fakeCustomer = Customer::factory()->make()->toArray();
+    $customer = Customer::factory()->create(['channel_id' => $this->channel->id]);
+    $fakeCustomer = Customer::factory()->make(['channel_id' => $this->channel->id])->toArray();
     $updatedCustomer = $this->customerRepo->update($fakeCustomer, $customer->id);
     $this->assertModelData($fakeCustomer, $updatedCustomer->toArray());
     $dbCustomer = $this->customerRepo->find($customer->id);
@@ -31,7 +39,7 @@ test('update customer', function () {
 });
 
 test('delete customer', function () {
-    $customer = Customer::factory()->create();
+    $customer = Customer::factory()->create(['channel_id' => $this->channel->id]);
     $resp = $this->customerRepo->delete($customer->id);
     $this->assertTrue($resp);
     $this->assertNull(Customer::find($customer->id), 'Customer should not exist in DB');
