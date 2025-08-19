@@ -79,6 +79,10 @@ jobs:
         echo "SESSION_DRIVER=array" >> .env
         echo "QUEUE_DRIVER=sync" >> .env
         echo "APP_ENV=testing" >> .env
+        echo "BCRYPT_ROUNDS=4" >> .env
+        echo "CLOUDFLARE_TOKEN=test-token" >> .env
+        echo "CLOUDFLARE_ZONE_ID=zone-123" >> .env
+        echo "CLOUDFLARE_SERVER_IP=54.88.38.41" >> .env
 
     - name: Run database migrations
       run: php artisan migrate --force
@@ -99,6 +103,10 @@ jobs:
         DB_DATABASE: flyhub_test
         DB_USERNAME: flyhub_test
         DB_PASSWORD: password
+        BCRYPT_ROUNDS: 4
+        CLOUDFLARE_TOKEN: test-token
+        CLOUDFLARE_ZONE_ID: zone-123
+        CLOUDFLARE_SERVER_IP: 54.88.38.41
 
     - name: Run Pest tests
       run: |
@@ -110,6 +118,10 @@ jobs:
         DB_DATABASE: flyhub_test
         DB_USERNAME: flyhub_test
         DB_PASSWORD: password
+        BCRYPT_ROUNDS: 4
+        CLOUDFLARE_TOKEN: test-token
+        CLOUDFLARE_ZONE_ID: zone-123
+        CLOUDFLARE_SERVER_IP: 54.88.38.41
 
   lint:
     runs-on: ubuntu-latest
