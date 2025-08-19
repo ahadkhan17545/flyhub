@@ -2,14 +2,16 @@
 
 use App\Models\Tenant\ShipmentItem;
 use App\Models\Tenant\Shipment;
+use App\Models\Tenant\Order;
 use App\Repositories\Tenant\ShipmentItemRepository;
 
 uses(Tests\TestCase::class);
 
 beforeEach(function () {
     $this->shipmentItemRepo = new ShipmentItemRepository();
-    // Create a shipment for foreign key constraints
-    $this->shipment = Shipment::factory()->create();
+    // Create an order and a shipment for foreign key constraints
+    $this->order = Order::factory()->create();
+    $this->shipment = Shipment::factory()->create(['order_id' => $this->order->id]);
 });
 
 test('create shipment item', function () {
