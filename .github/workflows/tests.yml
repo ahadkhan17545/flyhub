@@ -102,7 +102,7 @@ jobs:
       run: php artisan migrate --database=testing --force
 
     - name: Install Laravel Passport
-      run: php artisan passport:install --database=testing --force
+      run: php artisan passport:install --force
 
     - name: Build frontend assets
       run: yarn dev
