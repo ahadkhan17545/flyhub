@@ -84,6 +84,17 @@ jobs:
         echo "CLOUDFLARE_ZONE_ID=zone-123" >> .env
         echo "CLOUDFLARE_SERVER_IP=54.88.38.41" >> .env
 
+    - name: Test database connection
+      run: |
+        php artisan tinker --execute="DB::connection()->getPdo(); echo 'Database connection successful';"
+      env:
+        DB_CONNECTION: mysql
+        DB_HOST: 127.0.0.1
+        DB_PORT: 3306
+        DB_DATABASE: flyhub_test
+        DB_USERNAME: flyhub_test
+        DB_PASSWORD: password
+
     - name: Run database migrations
       run: php artisan migrate --force
 
@@ -122,6 +133,11 @@ jobs:
         CLOUDFLARE_TOKEN: test-token
         CLOUDFLARE_ZONE_ID: zone-123
         CLOUDFLARE_SERVER_IP: 54.88.38.41
+
+    - name: Show environment configuration
+      run: |
+        echo "Current environment variables:"
+        grep -E "^(DB_|APP_|CACHE_|SESSION_|QUEUE_|BCRYPT_|CLOUDFLARE_)" .env || echo "No matching env vars found"
 
   lint:
     runs-on: ubuntu-latest
