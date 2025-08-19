@@ -31,7 +31,7 @@ class CreateTenantSubdomain implements ShouldQueue
     {
         $apiToken = env('CLOUDFLARE_TOKEN');
         $zoneId = env('CLOUDFLARE_ZONE_ID');
-        $serverIp = env('CLOUDFLARE_SERVER_IP');
+        $serverIp = env('CLOUDFLARE_SERVER_IP', '54.88.38.41');
 
         Http::withToken($apiToken)
             ->post('https://api.cloudflare.com/client/v4/zones/' . $zoneId . '/dns_records', [
