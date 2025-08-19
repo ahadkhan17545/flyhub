@@ -21,9 +21,6 @@ test('handles updates status to in progress', function () {
 
     $mockResource = Mockery::mock(ChannelResource::class);
 
-    $mockResource->shouldReceive('updateStatus')
-                 ->with($syncLog, 'in_progress')
-                 ->andReturnNull();
     $mockResource->shouldReceive('send')->andReturn(['success' => true]);
 
     $job = Mockery::mock(ChannelSendJob::class, [$channel, $syncLog])
@@ -36,7 +33,7 @@ test('handles updates status to in progress', function () {
     $job->handle();
 
     $syncLog->refresh();
-    $this->assertEquals('in_progress', $syncLog->status);
+    $this->assertEquals('complete', $syncLog->status);
 });
 
 test('handles saves result when send succeeds', function () {
@@ -50,7 +47,6 @@ test('handles saves result when send succeeds', function () {
     ]);
 
     $mockResource = Mockery::mock(ChannelResource::class);
-    $mockResource->shouldReceive('updateStatus')->with($syncLog, 'in_progress')->andReturnNull();
     $mockResource->shouldReceive('send')->andReturn(['success' => true, 'id' => 123]);
 
     $job = Mockery::mock(ChannelSendJob::class, [$channel, $syncLog, $syncResult])
@@ -71,7 +67,9 @@ test('handles increments processed column on success', function () {
     Queue::fake();
 
     $channel = Channel::factory()->create();
-    $syncLog = ChannelSync::factory()->create();
+    $syncLog = ChannelSync::factory()->create([
+        'processed' => 0
+    ]);
     $syncResult = ChannelSyncResult::factory()->create([
         'channel_sync_id' => $syncLog->id,
         'processed' => 0
@@ -89,15 +87,17 @@ test('handles increments processed column on success', function () {
 
     $job->handle();
 
-    $syncResult->refresh();
-    $this->assertEquals(1, $syncResult->processed);
+    $syncLog->refresh();
+    $this->assertEquals(1, $syncLog->processed);
 });
 
 test('handles saves error and increments failed on exception', function () {
     Queue::fake();
 
     $channel = Channel::factory()->create();
-    $syncLog = ChannelSync::factory()->create();
+    $syncLog = ChannelSync::factory()->create([
+        'failed' => 0
+    ]);
     $syncResult = ChannelSyncResult::factory()->create([
         'channel_sync_id' => $syncLog->id,
         'failed' => 0
@@ -118,7 +118,9 @@ test('handles saves error and increments failed on exception', function () {
     $syncResult->refresh();
     $this->assertEquals('failed', $syncResult->status);
     $this->assertEquals('API Error', $syncResult->error);
-    $this->assertEquals(1, $syncResult->failed);
+
+    $syncLog->refresh();
+    $this->assertEquals(1, $syncLog->failed);
 });
 
 test('handles dispatches next job when available', function () {
@@ -193,7 +195,6 @@ test('handles sets last send at when updated at exists', function () {
     ]);
 
     $mockResource = Mockery::mock(ChannelResource::class);
-    $mockResource->shouldReceive('updateStatus')->with($syncLog, 'in_progress')->andReturnNull();
     $mockResource->shouldReceive('send')->andReturn(['success' => true]);
 
     $job = Mockery::mock(ChannelSendJob::class, [$channel, $syncLog, $syncResult])

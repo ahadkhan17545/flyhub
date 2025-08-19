@@ -2,6 +2,7 @@
 
 namespace App\Models\Tenant;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -24,34 +25,46 @@ use Illuminate\Database\Eloquent\Model;
  */
 class ProductInventory extends Model
 {
-    /**
-     * @var string
-     */
-    public $table = 'product_inventories';
+	use HasFactory;
 
-    /**
-     * @var string[]
-     */
-    protected $guarded = ['id'];
+	/**
+	 * @var string
+	 */
+	public $table = 'product_inventories';
 
-    /**
-     * @var bool
-     */
-    public $timestamps = false;
+	/**
+	 * @var string[]
+	 */
+	protected $guarded = ['id'];
 
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
-    public function inventory_source()
-    {
-        return $this->belongsTo(InventorySource::class);
-    }
+	/**
+	 * @var bool
+	 */
+	public $timestamps = false;
 
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
-    public function product()
-    {
-        return $this->belongsTo(Product::class);
-    }
+	/**
+	 * Create a new factory instance for the model.
+	 *
+	 * @return \Illuminate\Database\Eloquent\Factories\Factory
+	 */
+	protected static function newFactory()
+	{
+		return \Database\Factories\ProductInventoryFactory::new();
+	}
+
+	/**
+	 * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+	 */
+	public function inventory_source()
+	{
+		return $this->belongsTo(InventorySource::class);
+	}
+
+	/**
+	 * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+	 */
+	public function product()
+	{
+		return $this->belongsTo(Product::class);
+	}
 }

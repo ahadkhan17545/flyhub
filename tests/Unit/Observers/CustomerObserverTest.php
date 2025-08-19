@@ -43,7 +43,7 @@ test('creating sets birthdate to null when null', function () {
 });
 
 test('updating sets birthdate to null when empty', function () {
-    $customer = Customer::factory()->create([
+    $customer = Customer::factory()->make([
         'birthdate' => '1990-01-01'
     ]);
 
@@ -56,7 +56,7 @@ test('updating sets birthdate to null when empty', function () {
 });
 
 test('updating preserves birthdate when not empty', function () {
-    $customer = Customer::factory()->create([
+    $customer = Customer::factory()->make([
         'birthdate' => '1990-01-01'
     ]);
 
@@ -69,7 +69,7 @@ test('updating preserves birthdate when not empty', function () {
 });
 
 test('updating sets birthdate to null when null', function () {
-    $customer = Customer::factory()->create([
+    $customer = Customer::factory()->make([
         'birthdate' => '1990-01-01'
     ]);
 

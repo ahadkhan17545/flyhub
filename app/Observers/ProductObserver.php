@@ -13,7 +13,7 @@ class ProductObserver
      */
     public function created(Product $product)
     {
-        if ($product->status === 'enabled') {
+        if ($product->status === true) {
             ChannelSendResourceJob::dispatch($product);
         }
     }

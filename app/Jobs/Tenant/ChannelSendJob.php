@@ -59,7 +59,7 @@ class ChannelSendJob extends ChannelBase implements ShouldQueue
 
             $itemUpdatedAt = get($this->data, 'updated_at');
             if (!empty($itemUpdatedAt)) {
-                $this->channel->setLastSendAt($this->syncLog->model, $itemUpdatedAt);
+                $this->channel->setLastSendAt($this->syncLog->resource, $itemUpdatedAt);
             }
         }
     }

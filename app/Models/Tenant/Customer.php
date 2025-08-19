@@ -191,16 +191,25 @@ class Customer extends Model
 	/**
 	 * Ensure empty or falsy birthdate is exposed as null (prevents casting empty string to Carbon).
 	 */
-	    public function getBirthdateAttribute($value)
-    {
-        if (array_key_exists('birthdate', $this->attributes) && empty($this->attributes['birthdate'])) {
-            return null;
-        }
-        if ($value instanceof Carbon) {
-            return $value->format('Y-m-d');
-        }
-        return $value;
-    }
+	public function getBirthdateAttribute($value)
+	{
+		if (array_key_exists('birthdate', $this->attributes) && empty($this->attributes['birthdate'])) {
+			return null;
+		}
+		if ($value instanceof Carbon) {
+			return $value->format('Y-m-d');
+		}
+		// If the value is a string, ensure it's in Y-m-d format
+		if (is_string($value) && !empty($value)) {
+			try {
+				$carbon = Carbon::parse($value);
+				return $carbon->format('Y-m-d');
+			} catch (\Exception $e) {
+				return $value;
+			}
+		}
+		return $value;
+	}
 
 	/**
 	 * @return float

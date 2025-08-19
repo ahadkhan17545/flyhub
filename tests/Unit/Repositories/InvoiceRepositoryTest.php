@@ -27,9 +27,23 @@ test('creates invoice', function () {
     $this->assertArrayHasKey('id', $createdInvoice);
     $this->assertNotNull($createdInvoice['id'], 'Created Invoice must have id specified');
     $this->assertNotNull(Invoice::find($createdInvoice['id']), 'Invoice with given id must be in DB');
-    // Remove fields that the repository calculates from the order
-    unset($invoice['state'], $invoice['total_qty'], $invoice['sub_total'], $invoice['grand_total'], $invoice['shipping_amount'], $invoice['tax_amount'], $invoice['discount_amount']);
-    $this->assertModelData($invoice, $createdInvoice);
+
+    // Only compare fields that the repository actually sets
+    $expectedFields = [
+        'order_id' => $this->order->id,
+        'state' => $this->order->status,
+        'email_sent' => false,
+        'total_qty' => $this->order->total_qty_ordered,
+        'sub_total' => $this->order->sub_total,
+        'grand_total' => $this->order->grand_total,
+        'shipping_amount' => $this->order->shipping_amount,
+        'tax_amount' => $this->order->tax_amount,
+        'discount_amount' => $this->order->discount_amount,
+    ];
+
+    foreach ($expectedFields as $field => $expectedValue) {
+        $this->assertEquals($expectedValue, $createdInvoice[$field], "Field '{$field}' mismatch");
+    }
 });
 
 test('reads invoice', function () {
