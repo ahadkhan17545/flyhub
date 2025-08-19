@@ -17,10 +17,10 @@ abstract class TestCase extends BaseTestCase
         // Ensure we're using the testing database connection
         $this->app['config']->set('database.default', 'testing');
 
-        // Only run migrations if they haven't been run yet
-        if (!$this->migrationsHaveRun()) {
-            $this->runMigrations();
-        }
+        $this->runMigrations();
+
+        // Ensure tenancy is properly configured for testing
+        $this->configureTenancyForTesting();
     }
 
     protected function runMigrations(): void
@@ -48,5 +48,15 @@ abstract class TestCase extends BaseTestCase
         } catch (\Exception $e) {
             return false;
         }
+    }
+
+    protected function configureTenancyForTesting(): void
+    {
+        // Ensure tenancy system is properly configured for testing
+        $this->app['config']->set('tenancy.database.central_connection', 'testing');
+
+        // Disable automatic tenant database creation in tests to avoid conflicts
+        $this->app['config']->set('tenancy.database.auto_create', false);
+        $this->app['config']->set('tenancy.database.auto_update_schema', false);
     }
 }
