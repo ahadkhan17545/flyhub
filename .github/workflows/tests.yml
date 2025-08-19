@@ -64,12 +64,10 @@ jobs:
     - name: Create database
       run: |
         mysql -h 127.0.0.1 -P 3306 -u root -ppassword -e "CREATE DATABASE IF NOT EXISTS flyhub_test;"
-        mysql -h 127.0.0.1 -P 3306 -u root -ppassword -e "GRANT ALL PRIVILEGES ON flyhub_test.* TO 'flyhub_test'@'%';"
-        mysql -h 127.0.0.1 -P 3306 -u root -ppassword -e "FLUSH PRIVILEGES;"
 
     - name: Configure environment for testing
       run: |
-        echo "DB_CONNECTION=mysql" >> .env
+        echo "DB_CONNECTION=testing" >> .env
         echo "DB_HOST=127.0.0.1" >> .env
         echo "DB_PORT=3306" >> .env
         echo "DB_DATABASE=flyhub_test" >> .env
@@ -88,7 +86,7 @@ jobs:
       run: |
         php artisan tinker --execute="DB::connection()->getPdo(); echo 'Database connection successful';"
       env:
-        DB_CONNECTION: mysql
+        DB_CONNECTION: testing
         DB_HOST: 127.0.0.1
         DB_PORT: 3306
         DB_DATABASE: flyhub_test
@@ -108,7 +106,7 @@ jobs:
       run: |
         php artisan test --parallel
       env:
-        DB_CONNECTION: mysql
+        DB_CONNECTION: testing
         DB_HOST: 127.0.0.1
         DB_PORT: 3306
         DB_DATABASE: flyhub_test
@@ -123,7 +121,7 @@ jobs:
       run: |
         ./vendor/bin/pest
       env:
-        DB_CONNECTION: mysql
+        DB_CONNECTION: testing
         DB_HOST: 127.0.0.1
         DB_PORT: 3306
         DB_DATABASE: flyhub_test

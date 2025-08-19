@@ -87,11 +87,11 @@ return [
 
         'testing' => [
             'driver' => 'mysql',
-            'database' => 'flyhub_test',
-            'host' => 'mysql',
-            'port' => '3306',
-            'username' => 'flyhub_test',
-            'password' => 'password',
+            'database' => env('DB_DATABASE', 'flyhub_test'),
+            'host' => env('DB_HOST', 'mysql'),
+            'port' => env('DB_PORT', '3306'),
+            'username' => env('DB_USERNAME', 'root'),
+            'password' => env('DB_PASSWORD', 'password'),
             'prefix' => '',
         ],
 
