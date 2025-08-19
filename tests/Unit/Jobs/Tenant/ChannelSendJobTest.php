@@ -7,7 +7,6 @@ use App\Models\Tenant\ChannelSyncResult;
 use App\Integration\ChannelResource;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Support\Facades\Queue;
-use Mockery;
 
 uses(Tests\TestCase::class, DatabaseTransactions::class);
 
@@ -19,11 +18,11 @@ test('handles updates status to in progress', function () {
         'status' => 'pending'
     ]);
 
-    $mockResource = Mockery::mock(ChannelResource::class);
+    $mockResource = \Mockery::mock(ChannelResource::class);
 
     $mockResource->shouldReceive('send')->andReturn(['success' => true]);
 
-    $job = Mockery::mock(ChannelSendJob::class, [$channel, $syncLog])
+    $job = \Mockery::mock(ChannelSendJob::class, [$channel, $syncLog])
         ->makePartial()
         ->shouldAllowMockingProtectedMethods();
 
@@ -46,10 +45,10 @@ test('handles saves result when send succeeds', function () {
         'data' => json_encode(['test' => 'data'])
     ]);
 
-    $mockResource = Mockery::mock(ChannelResource::class);
+    $mockResource = \Mockery::mock(ChannelResource::class);
     $mockResource->shouldReceive('send')->andReturn(['success' => true, 'id' => 123]);
 
-    $job = Mockery::mock(ChannelSendJob::class, [$channel, $syncLog, $syncResult])
+    $job = \Mockery::mock(ChannelSendJob::class, [$channel, $syncLog, $syncResult])
         ->makePartial()
         ->shouldAllowMockingProtectedMethods();
 
@@ -75,10 +74,10 @@ test('handles increments processed column on success', function () {
         'processed' => 0
     ]);
 
-    $mockResource = Mockery::mock(ChannelResource::class);
+    $mockResource = \Mockery::mock(ChannelResource::class);
     $mockResource->shouldReceive('send')->andReturn(['success' => true]);
 
-    $job = Mockery::mock(ChannelSendJob::class, [$channel, $syncLog, $syncResult])
+    $job = \Mockery::mock(ChannelSendJob::class, [$channel, $syncLog, $syncResult])
         ->makePartial()
         ->shouldAllowMockingProtectedMethods();
 
@@ -103,10 +102,10 @@ test('handles saves error and increments failed on exception', function () {
         'failed' => 0
     ]);
 
-    $mockResource = Mockery::mock(ChannelResource::class);
+    $mockResource = \Mockery::mock(ChannelResource::class);
     $mockResource->shouldReceive('send')->andThrow(new Exception('API Error'));
 
-    $job = Mockery::mock(ChannelSendJob::class, [$channel, $syncLog, $syncResult])
+    $job = \Mockery::mock(ChannelSendJob::class, [$channel, $syncLog, $syncResult])
         ->makePartial()
         ->shouldAllowMockingProtectedMethods();
 
@@ -137,10 +136,10 @@ test('handles dispatches next job when available', function () {
         'data' => json_encode(['next' => 'item'])
     ]);
 
-    $mockResource = Mockery::mock(ChannelResource::class);
+    $mockResource = \Mockery::mock(ChannelResource::class);
     $mockResource->shouldReceive('send')->andReturn(['success' => true]);
 
-    $job = Mockery::mock(ChannelSendJob::class, [$channel, $syncLog, $syncResult])
+    $job = \Mockery::mock(ChannelSendJob::class, [$channel, $syncLog, $syncResult])
         ->makePartial()
         ->shouldAllowMockingProtectedMethods();
 
@@ -161,10 +160,10 @@ test('handles updates status to complete when no next job', function () {
         'channel_sync_id' => $syncLog->id
     ]);
 
-    $mockResource = Mockery::mock(ChannelResource::class);
+    $mockResource = \Mockery::mock(ChannelResource::class);
     $mockResource->shouldReceive('send')->andReturn(['success' => true]);
 
-    $job = Mockery::mock(ChannelSendJob::class, [$channel, $syncLog, $syncResult])
+    $job = \Mockery::mock(ChannelSendJob::class, [$channel, $syncLog, $syncResult])
         ->makePartial()
         ->shouldAllowMockingProtectedMethods();
 
@@ -180,7 +179,7 @@ test('handles updates status to complete when no next job', function () {
 test('handles sets last send at when updated at exists', function () {
     Queue::fake();
 
-    $channel = Mockery::mock(Channel::class)->makePartial();
+    $channel = \Mockery::mock(Channel::class)->makePartial();
     $channel->shouldReceive('getConfigs')->andReturn([]);
     $channel->code = 'bling';
 
@@ -194,10 +193,10 @@ test('handles sets last send at when updated at exists', function () {
         'channel_sync_id' => $syncLog->id
     ]);
 
-    $mockResource = Mockery::mock(ChannelResource::class);
+    $mockResource = \Mockery::mock(ChannelResource::class);
     $mockResource->shouldReceive('send')->andReturn(['success' => true]);
 
-    $job = Mockery::mock(ChannelSendJob::class, [$channel, $syncLog, $syncResult])
+    $job = \Mockery::mock(ChannelSendJob::class, [$channel, $syncLog, $syncResult])
         ->makePartial()
         ->shouldAllowMockingProtectedMethods();
 

@@ -20,7 +20,7 @@ test('handles creates dns record via cloudflare api', function () {
         ], 200)
     ]);
 
-    $tenant = Mockery::mock(TenantWithDatabase::class);
+    $tenant = \Mockery::mock(TenantWithDatabase::class);
     $tenant->shouldReceive('getTenantKey')->andReturn('test-tenant');
 
     $job = new CreateTenantSubdomain($tenant);
@@ -47,7 +47,7 @@ test('handles uses correct tenant key in dns record', function () {
         ], 200)
     ]);
 
-    $tenant = Mockery::mock(TenantWithDatabase::class);
+    $tenant = \Mockery::mock(TenantWithDatabase::class);
     $tenant->shouldReceive('getTenantKey')->andReturn('my-company');
 
     $job = new CreateTenantSubdomain($tenant);
@@ -65,7 +65,7 @@ test('handles uses cloudflare token from env', function () {
         ], 200)
     ]);
 
-    $tenant = Mockery::mock(TenantWithDatabase::class);
+    $tenant = \Mockery::mock(TenantWithDatabase::class);
     $tenant->shouldReceive('getTenantKey')->andReturn('test-tenant');
 
     $job = new CreateTenantSubdomain($tenant);
@@ -83,7 +83,7 @@ test('handles uses zone id from env', function () {
         ], 200)
     ]);
 
-    $tenant = Mockery::mock(TenantWithDatabase::class);
+    $tenant = \Mockery::mock(TenantWithDatabase::class);
     $tenant->shouldReceive('getTenantKey')->andReturn('test-tenant');
 
     $job = new CreateTenantSubdomain($tenant);
@@ -101,7 +101,7 @@ test('handles sets correct dns record parameters', function () {
         ], 200)
     ]);
 
-    $tenant = Mockery::mock(TenantWithDatabase::class);
+    $tenant = \Mockery::mock(TenantWithDatabase::class);
     $tenant->shouldReceive('getTenantKey')->andReturn('test-tenant');
 
     $job = new CreateTenantSubdomain($tenant);
