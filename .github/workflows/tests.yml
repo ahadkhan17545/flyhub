@@ -73,7 +73,7 @@ jobs:
         echo "DB_HOST=127.0.0.1" >> .env
         echo "DB_PORT=3306" >> .env
         echo "DB_DATABASE=flyhub_test" >> .env
-        echo "DB_USERNAME=flyhub_test" >> .env
+        echo "DB_USERNAME=root" >> .env
         echo "DB_PASSWORD=password" >> .env
         echo "CACHE_DRIVER=array" >> .env
         echo "SESSION_DRIVER=array" >> .env
@@ -92,7 +92,7 @@ jobs:
         DB_HOST: 127.0.0.1
         DB_PORT: 3306
         DB_DATABASE: flyhub_test
-        DB_USERNAME: flyhub_test
+        DB_USERNAME: root
         DB_PASSWORD: password
 
     - name: Run database migrations
@@ -112,7 +112,7 @@ jobs:
         DB_HOST: 127.0.0.1
         DB_PORT: 3306
         DB_DATABASE: flyhub_test
-        DB_USERNAME: flyhub_test
+        DB_USERNAME: root
         DB_PASSWORD: password
         BCRYPT_ROUNDS: 4
         CLOUDFLARE_TOKEN: test-token
@@ -127,7 +127,7 @@ jobs:
         DB_HOST: 127.0.0.1
         DB_PORT: 3306
         DB_DATABASE: flyhub_test
-        DB_USERNAME: flyhub_test
+        DB_USERNAME: root
         DB_PASSWORD: password
         BCRYPT_ROUNDS: 4
         CLOUDFLARE_TOKEN: test-token
