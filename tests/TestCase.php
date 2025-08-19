@@ -26,13 +26,12 @@ abstract class TestCase extends BaseTestCase
     protected function runMigrations(): void
     {
         // Run main migrations
-        Artisan::call('migrate', ['--database' => 'testing', '--force' => true]);
+        Artisan::call('migrate', ['--database' => 'testing']);
 
         // Run tenant migrations
         Artisan::call('migrate', [
             '--database' => 'testing',
-            '--path' => 'database/migrations/tenant',
-            '--force' => true
+            '--path' => 'database/migrations/tenant'
         ]);
     }
 
