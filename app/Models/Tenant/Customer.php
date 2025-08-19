@@ -4,6 +4,7 @@ namespace App\Models\Tenant;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Carbon;
 
 /**
  * App\Models\Customer
@@ -138,84 +139,98 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Customer extends Model
 {
-    use HasFactory;
+	use HasFactory;
 
-    /**
-     * @var string
-     */
-    public $table = 'customers';
+	/**
+	 * @var string
+	 */
+	public $table = 'customers';
 
-    /**
-     * @var string[]
-     */
-    protected $guarded = ['id'];
+	/**
+	 * @var string[]
+	 */
+	protected $guarded = ['id'];
 
-    /**
-     * The attributes that should be casted to native types.
-     *
-     * @var array
-     */
-    protected $casts = [
-        'status' => 'boolean',
-        'subscribed_to_news_letter' => 'boolean',
-        'birthdate' => 'date',
-    ];
+	/**
+	 * The attributes that should be casted to native types.
+	 *
+	 * @var array
+	 */
+	protected $casts = [
+		'status' => 'boolean',
+		'subscribed_to_news_letter' => 'boolean',
+		'birthdate' => 'date',
+	];
 
-    /**
-     * Validation rules
-     *
-     * @var array
-     */
-    public static $rules = [
-        'channel_id' => 'required',
-        'name' => 'required',
-        'email' => 'required',
-    ];
+	/**
+	 * Validation rules
+	 *
+	 * @var array
+	 */
+	public static $rules = [
+		'channel_id' => 'required',
+		'name' => 'required',
+		'email' => 'required',
+	];
 
-    /**
-     * @var string[]
-     */
-    protected $appends = ['person_type'];
+	/**
+	 * @var string[]
+	 */
+	protected $appends = ['person_type'];
 
-    /**
-     * Create a new factory instance for the model.
-     *
-     * @return \Illuminate\Database\Eloquent\Factories\Factory
-     */
-    protected static function newFactory()
+	/**
+	 * Create a new factory instance for the model.
+	 *
+	 * @return \Illuminate\Database\Eloquent\Factories\Factory
+	 */
+	protected static function newFactory()
+	{
+		return \Database\Factories\CustomerFactory::new();
+	}
+
+	/**
+	 * Ensure empty or falsy birthdate is exposed as null (prevents casting empty string to Carbon).
+	 */
+	    public function getBirthdateAttribute($value)
     {
-        return \Database\Factories\CustomerFactory::new();
+        if (array_key_exists('birthdate', $this->attributes) && empty($this->attributes['birthdate'])) {
+            return null;
+        }
+        if ($value instanceof Carbon) {
+            return $value->format('Y-m-d');
+        }
+        return $value;
     }
 
-    /**
-     * @return float
-     */
-    public function getPersonTypeAttribute()
-    {
-        return strlen($this->cpf_cnpj) >= 14 ? 'J' : 'F';
-    }
+	/**
+	 * @return float
+	 */
+	public function getPersonTypeAttribute()
+	{
+		return strlen($this->cpf_cnpj) >= 14 ? 'J' : 'F';
+	}
 
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
-    public function channel()
-    {
-        return $this->belongsTo(Channel::class, 'channel_id');
-    }
+	/**
+	 * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+	 */
+	public function channel()
+	{
+		return $this->belongsTo(Channel::class, 'channel_id');
+	}
 
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
-    public function addresses()
-    {
-        return $this->hasMany(Address::class, 'customer_id');
-    }
+	/**
+	 * @return \Illuminate\Database\Eloquent\Relations\HasMany
+	 */
+	public function addresses()
+	{
+		return $this->hasMany(Address::class, 'customer_id');
+	}
 
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
-    public function orders()
-    {
-        return $this->hasMany(Order::class, 'customer_id');
-    }
+	/**
+	 * @return \Illuminate\Database\Eloquent\Relations\HasMany
+	 */
+	public function orders()
+	{
+		return $this->hasMany(Order::class, 'customer_id');
+	}
 }

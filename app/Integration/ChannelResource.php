@@ -130,8 +130,8 @@ abstract class ChannelResource
 
     /**
      * @param int $localId
-     * @param string|int $remoteId
      * @param string $remoteId
+     * @param string $name
      */
     protected function saveChannelCategory($localId, $remoteId, $name)
     {
@@ -169,7 +169,7 @@ abstract class ChannelResource
      * @param mixed|null $remoteLink
      * @return void
      * @throws InvalidArgumentException
-     * @throws InvalidCastException
+     * @throws Exception
      */
     protected function saveChannelProduct($localId, $remoteId = null, $remoteCategoryId = null, $remoteLink = null)
     {

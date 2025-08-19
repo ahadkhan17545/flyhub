@@ -23,7 +23,7 @@ test('handles updates status to in progress', function () {
 
     $mockResource->shouldReceive('updateStatus')
                  ->with($syncLog, 'in_progress')
-                 ->once();
+                 ->andReturnNull();
     $mockResource->shouldReceive('send')->andReturn(['success' => true]);
 
     $job = Mockery::mock(ChannelSendJob::class, [$channel, $syncLog])
@@ -50,6 +50,7 @@ test('handles saves result when send succeeds', function () {
     ]);
 
     $mockResource = Mockery::mock(ChannelResource::class);
+    $mockResource->shouldReceive('updateStatus')->with($syncLog, 'in_progress')->andReturnNull();
     $mockResource->shouldReceive('send')->andReturn(['success' => true, 'id' => 123]);
 
     $job = Mockery::mock(ChannelSendJob::class, [$channel, $syncLog, $syncResult])
@@ -177,7 +178,10 @@ test('handles updates status to complete when no next job', function () {
 test('handles sets last send at when updated at exists', function () {
     Queue::fake();
 
-    $channel = Channel::factory()->create();
+    $channel = Mockery::mock(Channel::class)->makePartial();
+    $channel->shouldReceive('getConfigs')->andReturn([]);
+    $channel->code = 'bling';
+
     $syncLog = ChannelSync::factory()->create();
     $syncResult = ChannelSyncResult::factory()->create([
         'channel_sync_id' => $syncLog->id,
@@ -189,6 +193,7 @@ test('handles sets last send at when updated at exists', function () {
     ]);
 
     $mockResource = Mockery::mock(ChannelResource::class);
+    $mockResource->shouldReceive('updateStatus')->with($syncLog, 'in_progress')->andReturnNull();
     $mockResource->shouldReceive('send')->andReturn(['success' => true]);
 
     $job = Mockery::mock(ChannelSendJob::class, [$channel, $syncLog, $syncResult])

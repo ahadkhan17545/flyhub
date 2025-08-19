@@ -3,6 +3,7 @@
 namespace App\Models\Tenant;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 /**
  * App\Models\SyncLogResult
@@ -31,25 +32,37 @@ use Illuminate\Database\Eloquent\Model;
  */
 class ChannelSyncResult extends Model
 {
-    /**
-     * @var string
-     */
-    public $table = 'channel_sync_results';
+	use HasFactory;
 
-    /**
-     * @var string[]
-     */
-    protected $guarded = ['id'];
+	/**
+	 * @var string
+	 */
+	public $table = 'channel_sync_results';
 
-    /**
-     * Validation rules
-     *
-     * @var array
-     */
-    public static $rules = ['channel_sync_id' => 'required'];
+	/**
+	 * @var string[]
+	 */
+	protected $guarded = ['id'];
 
-    public function sync_log()
-    {
-        return $this->belongsTo(ChannelSync::class, 'channel_sync_id');
-    }
+	/**
+	 * Validation rules
+	 *
+	 * @var array
+	 */
+	public static $rules = ['channel_sync_id' => 'required'];
+
+	/**
+	 * Create a new factory instance for the model.
+	 *
+	 * @return \Illuminate\Database\Eloquent\Factories\Factory
+	 */
+	protected static function newFactory()
+	{
+		return \Database\Factories\ChannelSyncResultFactory::new();
+	}
+
+	public function sync_log()
+	{
+		return $this->belongsTo(ChannelSync::class, 'channel_sync_id');
+	}
 }

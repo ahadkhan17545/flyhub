@@ -3,6 +3,7 @@
 namespace App\Models\Tenant;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 /**
  * App\Models\SyncLog
@@ -54,33 +55,45 @@ use Illuminate\Database\Eloquent\Model;
  */
 class ChannelSync extends Model
 {
-    /**
-     * @var string
-     */
-    public $table = 'channel_syncs';
+	use HasFactory;
 
-    /**
-     * @var string[]
-     */
-    protected $guarded = ['id'];
+	/**
+	 * @var string
+	 */
+	public $table = 'channel_syncs';
 
-    /**
-     * Validation rules
-     *
-     * @var array
-     */
-    public static $rules = [
-        'channel' => 'required',
-        'resource' => 'required',
-        'status' => 'required',
-        'message' => 'required',
-    ];
+	/**
+	 * @var string[]
+	 */
+	protected $guarded = ['id'];
 
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
-    public function results()
-    {
-        return $this->hasMany(ChannelSyncResult::class, 'channel_sync_id');
-    }
+	/**
+	 * Validation rules
+	 *
+	 * @var array
+	 */
+	public static $rules = [
+		'channel' => 'required',
+		'resource' => 'required',
+		'status' => 'required',
+		'message' => 'required',
+	];
+
+	/**
+	 * Create a new factory instance for the model.
+	 *
+	 * @return \Illuminate\Database\Eloquent\Factories\Factory
+	 */
+	protected static function newFactory()
+	{
+		return \Database\Factories\ChannelSyncFactory::new();
+	}
+
+	/**
+	 * @return \Illuminate\Database\Eloquent\Relations\HasMany
+	 */
+	public function results()
+	{
+		return $this->hasMany(ChannelSyncResult::class, 'channel_sync_id');
+	}
 }

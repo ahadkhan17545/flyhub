@@ -30,9 +30,15 @@ class ChannelSendJob extends ChannelBase implements ShouldQueue
      */
     public function handle()
     {
-        $this->updateStatus('in_progress');
-
         $channelResource = $this->channelResource();
+
+        if ($channelResource === null) {
+            $this->saveError('Channel resource not found');
+            $this->incrementColumn('failed');
+            return;
+        }
+
+        $this->updateStatus('in_progress');
 
         try {
             $result = $channelResource->send($this->data);
