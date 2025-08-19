@@ -1,8 +1,13 @@
 <?php
 
 use App\Models\Tenant\AttributeSet;
+use App\Repositories\Tenant\AttributeSetRepository;
 
 uses(Tests\TestCase::class);
+
+beforeEach(function () {
+    $this->attributeSetRepo = new AttributeSetRepository();
+});
 
 test('create attribute set', function () {
     $attributeSet = AttributeSet::factory()->make()->toArray();

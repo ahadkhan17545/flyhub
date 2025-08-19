@@ -1,8 +1,13 @@
 <?php
 
 use App\Models\Tenant\InvoiceItem;
+use App\Repositories\Tenant\InvoiceItemRepository;
 
 uses(Tests\TestCase::class);
+
+beforeEach(function () {
+    $this->invoiceItemRepo = new InvoiceItemRepository();
+});
 
 test('create invoice item', function () {
     $invoiceItem = InvoiceItem::factory()->make()->toArray();

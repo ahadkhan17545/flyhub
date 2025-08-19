@@ -18,18 +18,16 @@ class TaxFactory extends Factory
     public function definition()
     {
         return [
-            'identifier' => $this->faker->word,
-            'is_zip' => $this->faker->word,
-            'zip_code' => $this->faker->word,
-            'zip_from' => $this->faker->word,
-            'zip_to' => $this->faker->word,
-            'state' => $this->faker->word,
-            'state_from' => $this->faker->word,
-            'state_to' => $this->faker->word,
-            'country' => $this->faker->word,
-            'tax_rate' => $this->faker->word,
-            'created_at' => $this->faker->date('Y-m-d H:i:s'),
-            'updated_at' => $this->faker->date('Y-m-d H:i:s'),
+            'tag' => $this->faker->unique()->regexify('[A-Z0-9]{4,8}'),
+            'name' => $this->faker->words(2, true),
+            'type' => $this->faker->randomElement(['percentage', 'fixed', 'compound']),
+            'size' => $this->faker->randomElement(['small', 'medium', 'large']),
+            'description' => $this->faker->optional()->sentence,
+            'tax_rate' => $this->faker->randomFloat(4, 0, 25),
+            'formula' => $this->faker->optional()->regexify('[A-Z0-9_]{5,15}'),
+            'required' => $this->faker->boolean,
+            'visible' => $this->faker->boolean,
+            'default_value' => $this->faker->optional()->randomFloat(4, 0, 100),
         ];
     }
 }

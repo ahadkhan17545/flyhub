@@ -18,12 +18,9 @@ class AttributeSetFactory extends Factory
     public function definition()
     {
         return [
-            'code' => $this->faker->word,
-            'name' => $this->faker->word,
-            'status' => $this->faker->word,
-            'is_user_defined' => $this->faker->word,
-            'created_at' => $this->faker->date('Y-m-d H:i:s'),
-            'updated_at' => $this->faker->date('Y-m-d H:i:s'),
+            'name' => $this->faker->words(2, true),
+            'status' => $this->faker->boolean,
+            'is_user_defined' => $this->faker->boolean,
         ];
     }
 }

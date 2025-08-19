@@ -18,20 +18,19 @@ class ShipmentItemFactory extends Factory
     public function definition()
     {
         return [
-            'name' => $this->faker->word,
-            'description' => $this->faker->word,
-            'sku' => $this->faker->word,
-            'qty' => $this->faker->randomDigitNotNull,
-            'weight' => $this->faker->randomDigitNotNull,
-            'price' => $this->faker->word,
-            'base_price' => $this->faker->word,
-            'total' => $this->faker->word,
-            'base_total' => $this->faker->word,
-            'product_id' => $this->faker->randomDigitNotNull,
-            'product_type' => $this->faker->word,
-            'order_item_id' => $this->faker->randomDigitNotNull,
-            'shipment_id' => $this->faker->randomDigitNotNull,
-            'additional' => $this->faker->text
+            'sku' => $this->faker->optional()->regexify('[A-Z0-9]{8}'),
+            'name' => $this->faker->optional()->words(2, true),
+            'qty' => $this->faker->optional()->numberBetween(1, 10),
+            'weight' => $this->faker->optional()->randomFloat(2, 0.1, 10.0),
+            'width' => $this->faker->optional()->randomFloat(2, 1, 100),
+            'height' => $this->faker->optional()->randomFloat(2, 1, 100),
+            'depth' => $this->faker->optional()->randomFloat(2, 1, 100),
+            'price' => $this->faker->optional()->randomFloat(4, 10, 1000),
+            'total' => $this->faker->optional()->randomFloat(4, 10, 2000),
+            'product_id' => null, // Will be set by the test if needed
+            'order_item_id' => null, // Will be set by the test if needed
+            'shipment_id' => $this->faker->numberBetween(1, 100), // Will be overridden by test
+            'note' => $this->faker->optional()->sentence,
         ];
     }
 }

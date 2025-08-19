@@ -10,12 +10,15 @@ beforeEach(function () {
 });
 
 test('create user', function () {
-    $user = User::factory()->make()->toArray();
+    $user = User::factory()->make()->makeVisible(['password'])->toArray();
     $createdUser = $this->userRepo->create($user);
     $createdUser = $createdUser->toArray();
     $this->assertArrayHasKey('id', $createdUser);
     $this->assertNotNull($createdUser['id'], 'Created User must have id specified');
     $this->assertNotNull(User::find($createdUser['id']), 'User with given id must be in DB');
+
+    // Remove password from comparison since it gets hashed
+    unset($user['password']);
     $this->assertModelData($user, $createdUser);
 });
 

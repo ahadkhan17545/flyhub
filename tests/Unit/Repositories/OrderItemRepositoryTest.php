@@ -16,6 +16,9 @@ test('create order item', function () {
     $this->assertArrayHasKey('id', $createdOrderItem);
     $this->assertNotNull($createdOrderItem['id'], 'Created OrderItem must have id specified');
     $this->assertNotNull(OrderItem::find($createdOrderItem['id']), 'OrderItem with given id must be in DB');
+
+    // Remove calculated fields from comparison since they're set by observer
+    unset($orderItem['total']);
     $this->assertModelData($orderItem, $createdOrderItem);
 });
 
@@ -30,7 +33,11 @@ test('update order item', function () {
     $orderItem = OrderItem::factory()->create();
     $fakeOrderItem = OrderItem::factory()->make()->toArray();
     $updatedOrderItem = $this->orderItemRepo->update($fakeOrderItem, $orderItem->id);
+
+    // Remove calculated fields from comparison since they're set by observer
+    unset($fakeOrderItem['total']);
     $this->assertModelData($fakeOrderItem, $updatedOrderItem->toArray());
+
     $dbOrderItem = $this->orderItemRepo->find($orderItem->id);
     $this->assertModelData($fakeOrderItem, $dbOrderItem->toArray());
 });
