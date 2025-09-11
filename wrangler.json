@@ -1,4 +1,1 @@
-[build]
-command = "npm run build"
-cwd = "build_cwd"
-watch_dir = "build_watch_dir"
+npx create-cloudflare@latest flyhubtest --existing-script flyhubtest
