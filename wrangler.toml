@@ -1,1 +1,5 @@
-
+npm create cloudflare@latest
+# or
+pnpm create cloudflare@latest
+# or
+yarn create cloudflare@latest
