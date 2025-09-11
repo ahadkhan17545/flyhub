@@ -1,5 +1,4 @@
-npm create cloudflare@latest
-# or
-pnpm create cloudflare@latest
-# or
-yarn create cloudflare@latest
+[build]
+command = "npm run build"
+cwd = "build_cwd"
+watch_dir = "build_watch_dir"
